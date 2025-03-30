@@ -17,10 +17,18 @@ author = "agent"
 
 [[workflows.workflow.tasks]]
 task = "workflow.run"
-args = "FinBuddy App"
+args = "FinBuddy Backend"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "FinBuddy Frontend"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "LoadingScreenDemo"
 
 [[workflows.workflow]]
-name = "FinBuddy App"
+name = "FinBuddy Backend"
 author = "agent"
 
 [workflows.workflow.metadata]
@@ -31,9 +39,47 @@ task = "packager.installForAll"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "streamlit run app.py --server.port 5000"
+args = "cd finbuddy-react/backend && npm run dev"
 waitForPort = 5000
+
+[[workflows.workflow]]
+name = "FinBuddy Frontend"
+author = "agent"
+
+[workflows.workflow.metadata]
+agentRequireRestartOnSave = false
+
+[[workflows.workflow.tasks]]
+task = "packager.installForAll"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd finbuddy-react/frontend && PORT=5001 npm start"
+waitForPort = 5001
+
+[[workflows.workflow]]
+name = "LoadingScreenDemo"
+author = "agent"
+
+[workflows.workflow.metadata]
+agentRequireRestartOnSave = false
+
+[[workflows.workflow.tasks]]
+task = "packager.installForAll"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "streamlit run loading_screen_demo.py --server.port 5002 --server.address 0.0.0.0 --server.headless true"
+waitForPort = 5002
 
 [[ports]]
 localPort = 5000
 externalPort = 80
+
+[[ports]]
+localPort = 5001
+externalPort = 3000
+
+[[ports]]
+localPort = 5002
+externalPort = 3001

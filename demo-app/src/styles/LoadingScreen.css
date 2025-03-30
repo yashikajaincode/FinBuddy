@@ -1,0 +1,642 @@
+/* LoadingScreen.css */
+:root {
+  --primary-color: #4361ee;
+  --primary-light: #4cc9f0;
+  --primary-dark: #3a0ca3;
+  --success-color: #4caf50;
+  --success-light: #a5d6a7;
+  --success-dark: #2e7d32;
+  --warning-color: #ff9800;
+  --warning-light: #ffcc80;
+  --warning-dark: #ef6c00;
+  --danger-color: #f44336;
+  --danger-light: #ef9a9a;
+  --danger-dark: #c62828;
+  --text-color: #333;
+  --text-light: #666;
+  --background-color: #f9f9f9;
+  --card-background: #ffffff;
+  --border-color: #e0e0e0;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+}
+
+.loading-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.97);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.loading-screen.visible {
+  opacity: 1;
+}
+
+.loading-screen.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.loading-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  max-width: 500px;
+  padding: 2rem;
+  border-radius: 1rem;
+  background-color: white;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.loading-text {
+  margin: 1.5rem 0;
+}
+
+.loading-message {
+  margin: 0 0 1rem 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.loading-message.primary { color: var(--primary-color); }
+.loading-message.success { color: var(--success-color); }
+.loading-message.warning { color: var(--warning-color); }
+.loading-message.danger { color: var(--danger-color); }
+
+.loading-indicator {
+  display: flex;
+  justify-content: center;
+  margin: 1rem 0;
+}
+
+.dot-loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dot {
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 50%;
+  margin: 0 0.25rem;
+  animation: bounce 1.5s infinite ease-in-out;
+}
+
+.dot-loader.primary .dot { background-color: var(--primary-color); }
+.dot-loader.success .dot { background-color: var(--success-color); }
+.dot-loader.warning .dot { background-color: var(--warning-color); }
+.dot-loader.danger .dot { background-color: var(--danger-color); }
+
+.dot1 { animation-delay: 0s; }
+.dot2 { animation-delay: 0.2s; }
+.dot3 { animation-delay: 0.4s; }
+
+@keyframes bounce {
+  0%, 80%, 100% { transform: scale(0); }
+  40% { transform: scale(1); }
+}
+
+.loading-tip {
+  background-color: #f8f9fa;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  margin-top: 1rem;
+  max-width: 90%;
+}
+
+.tip-label {
+  display: block;
+  font-weight: 600;
+  color: var(--primary-color);
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.tip-text {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--text-light);
+  line-height: 1.5;
+}
+
+/* Mascot Styling */
+.mascot-container {
+  width: 120px;
+  height: 120px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Coin Mascot */
+.mascot-container.coin.primary .coin-body { background: var(--primary-color); }
+.mascot-container.coin.success .coin-body { background: var(--success-color); }
+.mascot-container.coin.warning .coin-body { background: var(--warning-color); }
+.mascot-container.coin.danger .coin-body { background: var(--danger-color); }
+
+.coin-body {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: var(--primary-color);
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: float 3s ease-in-out infinite;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.coin-inner {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.coin-dollar {
+  font-size: 32px;
+  font-weight: bold;
+  color: var(--primary-color);
+  animation: pulse 2s infinite;
+}
+
+.mascot-container.primary .coin-dollar { color: var(--primary-color); }
+.mascot-container.success .coin-dollar { color: var(--success-color); }
+.mascot-container.warning .coin-dollar { color: var(--warning-color); }
+.mascot-container.danger .coin-dollar { color: var(--danger-color); }
+
+.coin-shadow {
+  position: absolute;
+  bottom: -10px;
+  width: 70px;
+  height: 15px;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  animation: shadow 3s ease-in-out infinite;
+  z-index: -1;
+}
+
+.coin-shine {
+  position: absolute;
+  top: 20%;
+  left: 20%;
+  width: 20px;
+  height: 20px;
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 50%;
+  filter: blur(2px);
+}
+
+/* Piggy Bank Mascot */
+.mascot-container.piggy.primary .piggy-body { background: var(--primary-light); }
+.mascot-container.piggy.success .piggy-body { background: var(--success-light); }
+.mascot-container.piggy.warning .piggy-body { background: var(--warning-light); }
+.mascot-container.piggy.danger .piggy-body { background: var(--danger-light); }
+
+.piggy-body {
+  width: 80px;
+  height: 60px;
+  background: var(--primary-light);
+  border-radius: 40px 40px 30px 30px;
+  position: relative;
+  animation: float 3s ease-in-out infinite;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.piggy-ear-left, .piggy-ear-right {
+  width: 20px;
+  height: 20px;
+  background: inherit;
+  border-radius: 50%;
+  position: absolute;
+  top: -10px;
+}
+
+.piggy-ear-left {
+  left: 15px;
+}
+
+.piggy-ear-right {
+  right: 15px;
+}
+
+.piggy-snout {
+  width: 30px;
+  height: 20px;
+  background: inherit;
+  border-radius: 15px 15px 20px 20px;
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.piggy-nostril-left, .piggy-nostril-right {
+  width: 6px;
+  height: 6px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 50%;
+  position: absolute;
+  bottom: 3px;
+}
+
+.piggy-nostril-left {
+  left: 8px;
+}
+
+.piggy-nostril-right {
+  right: 8px;
+}
+
+.piggy-eye-left, .piggy-eye-right {
+  width: 12px;
+  height: 12px;
+  background: white;
+  border-radius: 50%;
+  position: absolute;
+  top: 15px;
+}
+
+.piggy-eye-left {
+  left: 20px;
+}
+
+.piggy-eye-right {
+  right: 20px;
+}
+
+.piggy-pupil {
+  width: 6px;
+  height: 6px;
+  background: black;
+  border-radius: 50%;
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  animation: blink 4s infinite;
+}
+
+.piggy-slot {
+  width: 20px;
+  height: 3px;
+  background: rgba(0, 0, 0, 0.2);
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 3px;
+}
+
+.coin {
+  width: 20px;
+  height: 5px;
+  background: #ffd700;
+  border-radius: 10px;
+  position: absolute;
+  opacity: 0;
+}
+
+.coin1 {
+  top: -20px;
+  animation: coinFall 2s 0.2s infinite;
+}
+
+.coin2 {
+  top: -40px;
+  left: 45%;
+  animation: coinFall 2s 0.7s infinite;
+}
+
+.coin3 {
+  top: -60px;
+  left: 55%;
+  animation: coinFall 2s 1.2s infinite;
+}
+
+/* Chart Mascot */
+.mascot-container.chart.primary .chart-paper { border-color: var(--primary-color); }
+.mascot-container.chart.success .chart-paper { border-color: var(--success-color); }
+.mascot-container.chart.warning .chart-paper { border-color: var(--warning-color); }
+.mascot-container.chart.danger .chart-paper { border-color: var(--danger-color); }
+
+.chart-paper {
+  width: 80px;
+  height: 80px;
+  background: white;
+  border: 2px solid var(--primary-color);
+  border-radius: 5px;
+  position: relative;
+  animation: float 3s ease-in-out infinite;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.chart-bar {
+  position: absolute;
+  bottom: 15px;
+  width: 10px;
+  background: var(--primary-color);
+}
+
+.mascot-container.primary .chart-bar { background: var(--primary-color); }
+.mascot-container.success .chart-bar { background: var(--success-color); }
+.mascot-container.warning .chart-bar { background: var(--warning-color); }
+.mascot-container.danger .chart-bar { background: var(--danger-color); }
+
+.bar1 {
+  height: 15px;
+  left: 15px;
+  animation: barGrow 2s infinite alternate;
+}
+
+.bar2 {
+  height: 25px;
+  left: 30px;
+  animation: barGrow 2s 0.3s infinite alternate;
+}
+
+.bar3 {
+  height: 35px;
+  left: 45px;
+  animation: barGrow 2s 0.6s infinite alternate;
+}
+
+.bar4 {
+  height: 45px;
+  left: 60px;
+  animation: barGrow 2s 0.9s infinite alternate;
+}
+
+.chart-line {
+  position: absolute;
+  top: 20px;
+  left: 15px;
+  width: 50px;
+  height: 2px;
+  background: var(--primary-color);
+  transform-origin: left center;
+  animation: lineDraw 3s infinite;
+}
+
+.mascot-container.primary .chart-line { background: var(--primary-color); }
+.mascot-container.success .chart-line { background: var(--success-color); }
+.mascot-container.warning .chart-line { background: var(--warning-color); }
+.mascot-container.danger .chart-line { background: var(--danger-color); }
+
+.chart-dot {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--primary-color);
+}
+
+.mascot-container.primary .chart-dot { background: var(--primary-color); }
+.mascot-container.success .chart-dot { background: var(--success-color); }
+.mascot-container.warning .chart-dot { background: var(--warning-color); }
+.mascot-container.danger .chart-dot { background: var(--danger-color); }
+
+.dot1 {
+  top: 20px;
+  left: 15px;
+}
+
+.dot2 {
+  top: 10px;
+  left: 28px;
+  animation: dotPulse 2s 0.3s infinite;
+}
+
+.dot3 {
+  top: 20px;
+  left: 40px;
+  animation: dotPulse 2s 0.6s infinite;
+}
+
+.dot4 {
+  top: 10px;
+  left: 55px;
+  animation: dotPulse 2s 0.9s infinite;
+}
+
+.chart-arrow {
+  position: absolute;
+  top: -20px;
+  right: -10px;
+  width: 40px;
+  height: 30px;
+  background: var(--primary-color);
+  clip-path: polygon(0% 100%, 50% 0%, 100% 100%);
+  animation: arrowBounce 2s infinite;
+}
+
+.mascot-container.primary .chart-arrow { background: var(--primary-color); }
+.mascot-container.success .chart-arrow { background: var(--success-color); }
+.mascot-container.warning .chart-arrow { background: var(--warning-color); }
+.mascot-container.danger .chart-arrow { background: var(--danger-color); }
+
+/* Rocket Mascot */
+.mascot-container.rocket.primary .rocket-body { background: var(--primary-color); }
+.mascot-container.rocket.success .rocket-body { background: var(--success-color); }
+.mascot-container.rocket.warning .rocket-body { background: var(--warning-color); }
+.mascot-container.rocket.danger .rocket-body { background: var(--danger-color); }
+
+.rocket-body {
+  width: 40px;
+  height: 80px;
+  background: var(--primary-color);
+  border-radius: 20px 20px 10px 10px;
+  position: relative;
+  animation: rocketFly 3s infinite;
+}
+
+.rocket-window {
+  width: 20px;
+  height: 20px;
+  background: white;
+  border-radius: 50%;
+  position: absolute;
+  top: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 2px solid rgba(0, 0, 0, 0.1);
+}
+
+.rocket-fin-left, .rocket-fin-right {
+  position: absolute;
+  bottom: 10px;
+  width: 15px;
+  height: 25px;
+  background: var(--primary-dark);
+  clip-path: polygon(0% 0%, 100% 50%, 0% 100%);
+}
+
+.mascot-container.primary .rocket-fin-left, .mascot-container.primary .rocket-fin-right { background: var(--primary-dark); }
+.mascot-container.success .rocket-fin-left, .mascot-container.success .rocket-fin-right { background: var(--success-dark); }
+.mascot-container.warning .rocket-fin-left, .mascot-container.warning .rocket-fin-right { background: var(--warning-dark); }
+.mascot-container.danger .rocket-fin-left, .mascot-container.danger .rocket-fin-right { background: var(--danger-dark); }
+
+.rocket-fin-left {
+  left: -15px;
+}
+
+.rocket-fin-right {
+  right: -15px;
+  transform: scaleX(-1);
+}
+
+.rocket-exhaust {
+  position: absolute;
+  bottom: -25px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20px;
+  height: 25px;
+  overflow: hidden;
+}
+
+.rocket-fire {
+  width: 20px;
+  height: 30px;
+  background: linear-gradient(to bottom, #ff9800, #ff5722);
+  clip-path: polygon(0% 0%, 50% 100%, 100% 0%);
+  animation: fire 0.5s infinite alternate;
+}
+
+.rocket-fire-particle {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: #ff9800;
+  border-radius: 50%;
+  opacity: 0.7;
+  animation: particle 1s infinite;
+}
+
+.particle1 {
+  left: 5px;
+  bottom: -5px;
+  animation-delay: 0.1s;
+}
+
+.particle2 {
+  left: 10px;
+  bottom: -10px;
+  animation-delay: 0.3s;
+}
+
+.particle3 {
+  left: 15px;
+  bottom: -7px;
+  animation-delay: 0.5s;
+}
+
+.rocket-dollar-sign {
+  position: absolute;
+  top: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+  animation: pulse 2s infinite;
+}
+
+/* Animations */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes shadow {
+  0%, 100% { transform: scale(1); opacity: 0.3; }
+  50% { transform: scale(0.8); opacity: 0.1; }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+@keyframes coinFall {
+  0% { transform: translateY(0); opacity: 0; }
+  20% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { transform: translateY(80px); opacity: 0; }
+}
+
+@keyframes blink {
+  0%, 45%, 55%, 100% { transform: scale(1); }
+  50% { transform: scale(0.1); }
+}
+
+@keyframes barGrow {
+  from { height: 5px; }
+  to { height: var(--end-height); }
+}
+
+@keyframes lineDraw {
+  0% { width: 0; }
+  40% { width: 50px; }
+  60% { width: 50px; }
+  100% { width: 0; }
+}
+
+@keyframes dotPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.5); }
+}
+
+@keyframes arrowBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes rocketFly {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+}
+
+@keyframes fire {
+  0% { height: 25px; }
+  100% { height: 35px; }
+}
+
+@keyframes particle {
+  0% { transform: translateY(0); opacity: 0.7; }
+  100% { transform: translateY(20px); opacity: 0; }
+}
+
+@media (max-width: 600px) {
+  .loading-content {
+    padding: 1.5rem;
+    max-width: 90%;
+  }
+  
+  .mascot-container {
+    width: 100px;
+    height: 100px;
+  }
+  
+  .loading-message {
+    font-size: 1.1rem;
+  }
+  
+  .loading-tip {
+    padding: 0.75rem;
+  }
+}
