@@ -1,0 +1,29 @@
+**AI Prompt to Create FinBuddy: Your AI Financial Assistant (Full Website Version)**  
+
+"Create a **fully functional, responsive website** called **FinBuddy**, designed to help students and beginners learn **budgeting, saving, and investing** in an engaging and easy-to-understand way. Instead of just a chatbot, FinBuddy should be a **complete financial learning platform** with interactive tools, a user-friendly interface, and visual dashboards.  
+
+### 🔹 **Tech Stack & Requirements:**  
+- **Frontend:** Use **React.js (or any other compatible frontend framework)** for a smooth and engaging UI.  
+- **Backend:** Use **Node.js with Express or Django/FastAPI** to handle requests.  
+- **Database:** Use **MongoDB, PostgreSQL, or Firebase** to store user data securely.  
+- **Authentication:** Implement **Login/Signup (with Google & email authentication)** for user accounts.  
+- **Deployment:** Use **free or cost-effective cloud solutions** (e.g., Vercel, Firebase, or Render).  
+
+### 🔹 **Core Features:**  
+
+1. **Budget Planner 📊** – Users input their income & expenses, and FinBuddy generates a **personalized budget plan** with insights.  
+2. **Savings Coach 🏦** – Users set financial goals (e.g., saving for a phone or trip), and FinBuddy provides **custom saving plans & tracking.**  
+3. **Investment 101 📚** – A dedicated section that **simplifies stocks, mutual funds, & crypto** using easy-to-read articles, **interactive quizzes, and videos.**  
+4. **"Can I Afford It?" Calculator 🛒** – Users enter a purchase they want to make, and the system **analyzes if it fits their budget** with suggestions.  
+5. **Daily Money Tips 💡** – Fun, **GenZ-style financial tips** using memes, short videos, and interactive stories to make learning finance easy.  
+6. **Financial Health Score 🚦** – A personalized score based on **spending habits & savings**, with **AI-powered recommendations** to improve financial well-being.  
+7. **Visual Dashboards 📈** – **Graphs, charts, and reports** that **track expenses, savings, and financial progress** for better clarity.  
+
+### 🔹 **Additional Features for Engagement:**  
+✅ **Gamification** – Users earn **badges, rewards, or points** for completing financial challenges & learning modules.  
+✅ **Community Forum** – A discussion board where users can **ask questions, share tips, and discuss financial topics.**  
+✅ **Personalized AI Chatbot** – An AI-powered assistant that answers finance-related queries within the platform.  
+
+The website should be **easy to navigate, mobile-friendly, and visually appealing**, making financial education **simple and engaging** for beginners. Prioritize **performance, scalability, and security** while ensuring a **seamless user experience.**  
+
+**Final Goal:** A **fully deployed, scalable, and engaging financial learning platform** that makes personal finance **fun, interactive, and accessible for everyone!**"
