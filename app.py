@@ -64,14 +64,16 @@ def main():
         st.caption(f"Level: {int(progress * 10)}/10")
         
         # Show API key input field
-        with st.expander("API Settings"):
-            api_key = st.text_input("OpenAI API Key", 
+        with st.expander("API Settings (Optional)"):
+            api_key = st.text_input("OpenAI API Key (Optional)", 
                                      type="password", 
                                      value=os.environ.get("OPENAI_API_KEY", ""),
-                                     help="Enter your OpenAI API key to enable AI features")
+                                     help="Optional: Enter your OpenAI API key for personalized AI responses. If not provided, the app will use static responses.")
             if api_key:
                 os.environ["OPENAI_API_KEY"] = api_key
                 st.session_state.openai_api_key = api_key
+            else:
+                st.info("No API key provided. Using built-in financial advice instead of AI responses.")
     
     # Main content area
     if page == "Chat with FinBuddy":

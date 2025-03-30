@@ -60,36 +60,72 @@ def load_css():
 
 def get_llm_response(prompt, system_prompt="You are FinBuddy, an AI assistant that helps users learn about personal finance, budgeting, saving, and investing. Your responses should be friendly, informative, and geared toward financial education for beginners."):
     """
-    Get a response from the GPT model via LangChain
+    Get a response from the GPT model via LangChain or fallback to static responses
     
     Args:
         prompt (str): User prompt
         system_prompt (str): System prompt defining the AI assistant's behavior
     
     Returns:
-        str: The AI response
+        str: The AI response or a default response
     """
-    if not st.session_state.openai_api_key:
-        return "Please add your OpenAI API key in the sidebar to use AI features."
+    # Dictionary of static responses based on keywords in the prompt
+    static_responses = {
+        "budget": "Creating a budget is the foundation of financial wellness! Start by tracking all income sources, then categorize your expenses into needs (rent, food), wants (entertainment), and savings. Aim to save at least 20% of your income using the 50/30/20 rule - 50% for needs, 30% for wants, and 20% for savings and debt repayment.",
+        
+        "save": "Saving money is all about small daily habits! Try the 30-day rule (wait 30 days before making non-essential purchases), automate your savings with direct deposits, and challenge yourself to no-spend days. Even saving $5 a day adds up to $1,825 in a year!",
+        
+        "invest": "Investing is how your money grows over time! As a beginner, consider starting with a tax-advantaged retirement account like a 401(k) or IRA. Index funds are great for beginners since they provide instant diversification with low fees. Remember, time in the market beats timing the market!",
+        
+        "debt": "Managing debt strategically is crucial! Prioritize high-interest debt like credit cards first (debt avalanche method) or start with small balances for quick wins (debt snowball method). Always pay more than the minimum payment, and consider consolidating high-interest debts to a lower rate.",
+        
+        "credit": "Building good credit is essential! Pay bills on time (35% of your score), keep credit utilization below 30%, maintain older accounts, avoid opening too many new accounts, and diversify your credit mix. Check your credit report annually for free at AnnualCreditReport.com.",
+        
+        "emergency": "An emergency fund is your financial safety net! Aim to save 3-6 months of essential expenses in an easily accessible account like a high-yield savings account. Start small with $1,000, then build up gradually. This protects you from going into debt when unexpected expenses hit.",
+        
+        "retirement": "Retirement planning works best when you start early! If your employer offers a 401(k) match, contribute at least enough to get the full match (it's free money!). Consider opening an IRA for additional tax advantages, and increase your contributions whenever you get a raise.",
+        
+        "tax": "Understanding tax basics can save you money! Take advantage of tax-advantaged accounts like 401(k)s and IRAs. Track deductible expenses throughout the year, consider tax-loss harvesting for investments, and remember that tax refunds mean you've been giving the government an interest-free loan!",
+        
+        "house": "Buying a home requires preparation! Save for a down payment (aim for 20% to avoid PMI), check your credit score (higher scores get better rates), get pre-approved before house hunting, and remember the true cost includes maintenance, insurance, property taxes, and utilities.",
+        
+        "insurance": "Insurance protects your financial future! Essential types include health insurance, auto insurance, renters/homeowners insurance, and eventually life insurance if others depend on your income. Shop around annually for better rates, and choose higher deductibles to lower premiums if you have an emergency fund.",
+    }
     
-    try:
-        # the newest OpenAI model is "gpt-4o" which was released May 13, 2024.
-        # do not change this unless explicitly requested by the user
-        chat = ChatOpenAI(
-            temperature=0.7,
-            openai_api_key=st.session_state.openai_api_key,
-            model="gpt-4o"
-        )
-        
-        messages = [
-            SystemMessage(content=system_prompt),
-            HumanMessage(content=prompt)
-        ]
-        
-        response = chat(messages)
-        return response.content
-    except Exception as e:
-        return f"Error: {str(e)}"
+    # Default response if no keywords match
+    default_response = "Financial literacy is key to building wealth! Start with creating a budget, build an emergency fund covering 3-6 months of expenses, pay down high-interest debt, save for retirement, and then expand to other investments. Small, consistent steps over time lead to financial freedom."
+    
+    # Try to use the API if available
+    if st.session_state.openai_api_key:
+        try:
+            # the newest OpenAI model is "gpt-4o" which was released May 13, 2024.
+            # do not change this unless explicitly requested by the user
+            chat = ChatOpenAI(
+                temperature=0.7,
+                openai_api_key=st.session_state.openai_api_key,
+                model="gpt-4o"
+            )
+            
+            messages = [
+                SystemMessage(content=system_prompt),
+                HumanMessage(content=prompt)
+            ]
+            
+            response = chat(messages)
+            return response.content
+        except Exception as e:
+            # Fall back to static responses on API error
+            st.warning(f"API Error: Using static financial advice instead. Error details: {str(e)}")
+    
+    # Fallback to static responses if no API key or API error
+    # Find the best matching keyword in the prompt
+    lower_prompt = prompt.lower()
+    for keyword, response in static_responses.items():
+        if keyword in lower_prompt:
+            return response
+    
+    # If no keyword matches, return the default response
+    return default_response
 
 def calculate_budget_summary(income, expenses):
     """Calculate budget summary statistics

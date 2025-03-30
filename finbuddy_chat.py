@@ -6,6 +6,23 @@ def display_chat_interface():
     st.title("💬 Chat with FinBuddy")
     st.write("Ask me anything about personal finance, budgeting, saving, or investing!")
     
+    # Display info about static responses if no API key
+    if not st.session_state.get("openai_api_key"):
+        st.info("FinBuddy is currently using built-in financial advice. For personalized AI responses, add an OpenAI API key in the sidebar settings.")
+        st.markdown("""
+        **Try asking about these financial topics:**
+        - Budgeting tips
+        - How to save money
+        - Investing basics
+        - Managing debt
+        - Building credit
+        - Emergency funds
+        - Retirement planning
+        - Tax strategies
+        - Home buying
+        - Insurance needs
+        """)
+    
     # Display chat messages from history
     for message in st.session_state.messages:
         with st.chat_message(message["role"]):
