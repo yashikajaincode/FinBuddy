@@ -1,5 +1,6 @@
 import streamlit as st
 import plotly.express as px
+import plotly.graph_objects as go
 import pandas as pd
 import numpy as np
 from utils import calculate_budget_summary, calculate_financial_health_score, get_llm_response
