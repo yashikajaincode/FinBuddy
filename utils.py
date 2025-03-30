@@ -3,7 +3,7 @@ import json
 import pandas as pd
 import os
 from datetime import datetime
-from langchain.chat_models import ChatOpenAI
+from langchain_community.chat_models import ChatOpenAI
 from langchain.schema import SystemMessage, HumanMessage, AIMessage
 
 def initialize_session_state():
