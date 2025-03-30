@@ -77,6 +77,10 @@ def get_llm_response(prompt, system_prompt="You are FinBuddy, an AI assistant th
         
         "invest": "Investing is how your money grows over time! As a beginner, consider starting with a tax-advantaged retirement account like a 401(k) or IRA. Index funds are great for beginners since they provide instant diversification with low fees. Remember, time in the market beats timing the market!",
         
+        "stock": "The stock market is a place where people buy and sell ownership shares in companies. Here's what to know as a beginner:\n\n• Start with index funds that track the entire market (like S&P 500) for instant diversification\n• Only invest money you won't need for at least 5 years\n• Set up automatic contributions to benefit from dollar-cost averaging\n• Understand that market fluctuations are normal - focus on long-term trends\n• Research companies before buying individual stocks or use index funds\n• Consider using a tax-advantaged account like a Roth IRA for your investments",
+        
+        "stock market": "The stock market is a place where people buy and sell ownership shares in companies. Here's what to know as a beginner:\n\n• Start with index funds that track the entire market (like S&P 500) for instant diversification\n• Only invest money you won't need for at least 5 years\n• Set up automatic contributions to benefit from dollar-cost averaging\n• Understand that market fluctuations are normal - focus on long-term trends\n• Research companies before buying individual stocks or use index funds\n• Consider using a tax-advantaged account like a Roth IRA for your investments",
+        
         "debt": "Managing debt strategically is crucial! Prioritize high-interest debt like credit cards first (debt avalanche method) or start with small balances for quick wins (debt snowball method). Always pay more than the minimum payment, and consider consolidating high-interest debts to a lower rate.",
         
         "credit": "Building good credit is essential! Pay bills on time (35% of your score), keep credit utilization below 30%, maintain older accounts, avoid opening too many new accounts, and diversify your credit mix. Check your credit report annually for free at AnnualCreditReport.com.",
@@ -95,8 +99,8 @@ def get_llm_response(prompt, system_prompt="You are FinBuddy, an AI assistant th
     # Default response if no keywords match
     default_response = "Financial literacy is key to building wealth! Start with creating a budget, build an emergency fund covering 3-6 months of expenses, pay down high-interest debt, save for retirement, and then expand to other investments. Small, consistent steps over time lead to financial freedom."
     
-    # Try to use the API if available
-    if st.session_state.openai_api_key:
+    # Try to use the API if available and not empty
+    if st.session_state.get("openai_api_key") and st.session_state.openai_api_key.strip():
         try:
             # the newest OpenAI model is "gpt-4o" which was released May 13, 2024.
             # do not change this unless explicitly requested by the user
@@ -115,7 +119,9 @@ def get_llm_response(prompt, system_prompt="You are FinBuddy, an AI assistant th
             return response.content
         except Exception as e:
             # Fall back to static responses on API error
-            st.warning(f"API Error: Using static financial advice instead. Error details: {str(e)}")
+            st.warning(f"API Error: Using static financial advice instead.")
+            # Log the error details but don't show to user
+            print(f"API Error details: {str(e)}")
     
     # Fallback to static responses if no API key or API error
     # Find the best matching keyword in the prompt
