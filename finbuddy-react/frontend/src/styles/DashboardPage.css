@@ -1,0 +1,264 @@
+@import './variables.css';
+
+.dashboard-page {
+  padding: var(--spacing-md);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.dashboard-header {
+  margin-bottom: var(--spacing-lg);
+  padding-bottom: var(--spacing-md);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.dashboard-header h1 {
+  font-size: var(--font-size-2xl);
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-xs);
+}
+
+.dashboard-date {
+  color: var(--text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+/* Mascot Showcase Section */
+.mascot-showcase {
+  background-color: var(--bg-gray-50);
+  padding: var(--spacing-lg);
+  border-radius: var(--border-radius-lg);
+  margin-bottom: var(--spacing-xl);
+  box-shadow: var(--shadow-sm);
+  border: 1px dashed var(--primary-light);
+  text-align: center;
+}
+
+.mascot-showcase h2 {
+  color: var(--primary-color);
+  margin-bottom: var(--spacing-sm);
+  font-size: var(--font-size-xl);
+}
+
+.mascot-showcase p {
+  margin-bottom: var(--spacing-md);
+  color: var(--text-secondary);
+}
+
+.mascot-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-md);
+  justify-content: center;
+}
+
+.mascot-button {
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--border-radius-md);
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-xs);
+}
+
+.mascot-button:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+}
+
+.coin-button {
+  background-color: var(--warning-light);
+  color: var(--warning-dark);
+}
+
+.coin-button:hover {
+  background-color: var(--warning-color);
+  color: white;
+}
+
+.piggy-button {
+  background-color: var(--danger-light);
+  color: var(--danger-dark);
+}
+
+.piggy-button:hover {
+  background-color: var(--danger-color);
+  color: white;
+}
+
+.chart-button {
+  background-color: var(--primary-light);
+  color: var(--primary-dark);
+}
+
+.chart-button:hover {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.rocket-button {
+  background-color: var(--success-light);
+  color: var(--success-dark);
+}
+
+.rocket-button:hover {
+  background-color: var(--success-color);
+  color: white;
+}
+
+/* Financial Summary Section */
+.dashboard-summary {
+  margin-bottom: var(--spacing-xl);
+}
+
+.dashboard-summary h2,
+.dashboard-savings-goals h2,
+.dashboard-insights h2,
+.dashboard-upcoming h2 {
+  font-size: var(--font-size-lg);
+  margin-bottom: var(--spacing-md);
+  color: var(--text-primary);
+  border-left: 4px solid var(--primary-color);
+  padding-left: var(--spacing-sm);
+}
+
+.summary-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: var(--spacing-md);
+}
+
+/* Savings Goals Section */
+.dashboard-savings-goals {
+  margin-bottom: var(--spacing-xl);
+}
+
+.savings-goals-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: var(--spacing-md);
+}
+
+/* Financial Insights Section */
+.dashboard-insights {
+  margin-bottom: var(--spacing-xl);
+}
+
+.insights-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: var(--spacing-md);
+}
+
+.insight-card {
+  background-color: white;
+  border-radius: var(--border-radius-md);
+  padding: var(--spacing-md);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border-color);
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-sm);
+}
+
+.insight-icon {
+  font-size: var(--font-size-xl);
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.insight-card p {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: var(--font-size-sm);
+  line-height: 1.5;
+}
+
+/* Upcoming Payments Section */
+.dashboard-upcoming {
+  margin-bottom: var(--spacing-xl);
+}
+
+.upcoming-payments {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: var(--spacing-md);
+}
+
+.payment-card {
+  background-color: white;
+  border-radius: var(--border-radius-md);
+  padding: var(--spacing-md);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.payment-info h3 {
+  font-size: var(--font-size-md);
+  margin: 0 0 var(--spacing-xs) 0;
+  color: var(--text-primary);
+}
+
+.payment-amount {
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  color: var(--danger-color);
+  margin: 0 0 var(--spacing-xs) 0;
+}
+
+.payment-date {
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.pay-button {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--border-radius-md);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.pay-button:hover {
+  background-color: var(--primary-dark);
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .dashboard-page {
+    padding: var(--spacing-sm);
+  }
+  
+  .mascot-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .mascot-button {
+    width: 100%;
+    max-width: 300px;
+  }
+  
+  .summary-cards,
+  .savings-goals-grid,
+  .insights-list,
+  .upcoming-payments {
+    grid-template-columns: 1fr;
+  }
+  
+  .dashboard-header h1 {
+    font-size: var(--font-size-xl);
+  }
+}

@@ -17,17 +17,19 @@ import AchievementsPage from './pages/AchievementsPage';
 import ProfilePage from './pages/ProfilePage';
 
 // Components
-import Navbar from './components/Navbar';
-import Footer from './components/Footer';
-import LoadingSpinner from './components/LoadingSpinner';
+import { Navbar, Footer, LoadingSpinner, LoadingScreen } from './components';
 
-// Context
+// Contexts
 import { AuthProvider } from './context/AuthContext';
 import { BudgetProvider } from './context/BudgetContext';
 import { SavingsProvider } from './context/SavingsContext';
+import { GamificationProvider } from './context/GamificationContext';
+import { ChatProvider } from './context/ChatContext';
 
 // CSS
 import './App.css';
+// Import all component styles
+import './styles';
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -40,7 +42,15 @@ function App() {
   }, []);
 
   if (loading) {
-    return <LoadingSpinner />;
+    return (
+      <LoadingScreen 
+        show={true} 
+        message="Welcome to FinBuddy!" 
+        theme="primary"
+        mascotType="rocket"
+        minDisplayTime={2000}
+      />
+    );
   }
 
   return (
@@ -48,63 +58,67 @@ function App() {
       <AuthProvider>
         <BudgetProvider>
           <SavingsProvider>
-            <div className="app">
-              <Navbar />
-              <main className="main-content">
-                <Routes>
-                  <Route path="/" element={<HomePage />} />
-                  <Route path="/login" element={<LoginPage />} />
-                  <Route path="/register" element={<RegisterPage />} />
-                  <Route path="/dashboard" element={
-                    <ProtectedRoute>
-                      <DashboardPage />
-                    </ProtectedRoute>
-                  } />
-                  <Route path="/budget" element={
-                    <ProtectedRoute>
-                      <BudgetPlannerPage />
-                    </ProtectedRoute>
-                  } />
-                  <Route path="/savings" element={
-                    <ProtectedRoute>
-                      <SavingsCoachPage />
-                    </ProtectedRoute>
-                  } />
-                  <Route path="/investments" element={
-                    <ProtectedRoute>
-                      <InvestmentEducationPage />
-                    </ProtectedRoute>
-                  } />
-                  <Route path="/tips" element={
-                    <ProtectedRoute>
-                      <FinanceTipsPage />
-                    </ProtectedRoute>
-                  } />
-                  <Route path="/health" element={
-                    <ProtectedRoute>
-                      <FinancialHealthPage />
-                    </ProtectedRoute>
-                  } />
-                  <Route path="/chat" element={
-                    <ProtectedRoute>
-                      <ChatPage />
-                    </ProtectedRoute>
-                  } />
-                  <Route path="/achievements" element={
-                    <ProtectedRoute>
-                      <AchievementsPage />
-                    </ProtectedRoute>
-                  } />
-                  <Route path="/profile" element={
-                    <ProtectedRoute>
-                      <ProfilePage />
-                    </ProtectedRoute>
-                  } />
-                  <Route path="*" element={<Navigate to="/" replace />} />
-                </Routes>
-              </main>
-              <Footer />
-            </div>
+            <GamificationProvider>
+              <ChatProvider>
+                <div className="app">
+                  <Navbar />
+                  <main className="main-content">
+                    <Routes>
+                      <Route path="/" element={<HomePage />} />
+                      <Route path="/login" element={<LoginPage />} />
+                      <Route path="/register" element={<RegisterPage />} />
+                      <Route path="/dashboard" element={
+                        <ProtectedRoute>
+                          <DashboardPage />
+                        </ProtectedRoute>
+                      } />
+                      <Route path="/budget" element={
+                        <ProtectedRoute>
+                          <BudgetPlannerPage />
+                        </ProtectedRoute>
+                      } />
+                      <Route path="/savings" element={
+                        <ProtectedRoute>
+                          <SavingsCoachPage />
+                        </ProtectedRoute>
+                      } />
+                      <Route path="/investments" element={
+                        <ProtectedRoute>
+                          <InvestmentEducationPage />
+                        </ProtectedRoute>
+                      } />
+                      <Route path="/tips" element={
+                        <ProtectedRoute>
+                          <FinanceTipsPage />
+                        </ProtectedRoute>
+                      } />
+                      <Route path="/health" element={
+                        <ProtectedRoute>
+                          <FinancialHealthPage />
+                        </ProtectedRoute>
+                      } />
+                      <Route path="/chat" element={
+                        <ProtectedRoute>
+                          <ChatPage />
+                        </ProtectedRoute>
+                      } />
+                      <Route path="/achievements" element={
+                        <ProtectedRoute>
+                          <AchievementsPage />
+                        </ProtectedRoute>
+                      } />
+                      <Route path="/profile" element={
+                        <ProtectedRoute>
+                          <ProfilePage />
+                        </ProtectedRoute>
+                      } />
+                      <Route path="*" element={<Navigate to="/" replace />} />
+                    </Routes>
+                  </main>
+                  <Footer />
+                </div>
+              </ChatProvider>
+            </GamificationProvider>
           </SavingsProvider>
         </BudgetProvider>
       </AuthProvider>

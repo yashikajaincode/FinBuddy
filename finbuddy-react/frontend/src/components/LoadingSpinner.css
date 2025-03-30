@@ -1,3 +1,5 @@
+@import '../styles/variables.css';
+
 .spinner-container {
   display: flex;
   flex-direction: column;
@@ -16,15 +18,62 @@
   animation: spin 1s ease-in-out infinite;
 }
 
-.spinner-text {
-  margin-top: 15px;
-  color: #666;
-  font-size: 0.9rem;
-  text-align: center;
+/* Theme color variations */
+.spinner.spinner-primary {
+  border-top-color: var(--primary-color);
 }
 
+.spinner.spinner-success {
+  border-top-color: var(--success-color);
+}
+
+.spinner.spinner-warning {
+  border-top-color: var(--warning-color);
+}
+
+.spinner.spinner-danger {
+  border-top-color: var(--danger-color);
+}
+
+.spinner-text {
+  margin-top: 15px;
+  color: var(--text-secondary);
+  font-size: var(--font-size-sm);
+  text-align: center;
+  font-weight: 500;
+}
+
+/* Text theme variations */
+.spinner-text.spinner-primary {
+  color: var(--primary-color);
+}
+
+.spinner-text.spinner-success {
+  color: var(--success-color);
+}
+
+.spinner-text.spinner-warning {
+  color: var(--warning-color);
+}
+
+.spinner-text.spinner-danger {
+  color: var(--danger-color);
+}
+
+/* Spin animation */
 @keyframes spin {
   to {
     transform: rotate(360deg);
   }
+}
+
+/* For when container is full width/height */
+.spinner-container.full-page {
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgba(255, 255, 255, 0.9);
+  z-index: var(--z-index-5);
 }

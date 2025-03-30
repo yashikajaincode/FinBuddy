@@ -166,10 +166,14 @@ export const AuthProvider = ({ children }) => {
     setError(null);
   };
 
+  // Get token from local storage
+  const token = localStorage.getItem('finbuddyToken');
+  
   return (
     <AuthContext.Provider
       value={{
         user,
+        token,
         isAuthenticated,
         loading,
         error,

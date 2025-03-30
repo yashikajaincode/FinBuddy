@@ -170,8 +170,65 @@ def calculate_budget_summary(income, expenses):
     }
 
 def format_currency(amount):
-    """Format an amount as currency"""
-    return f"${amount:,.2f}"
+    """Format an amount as Indian Rupees (INR)"""
+    import locale
+    
+    # Try to set the locale to Indian English
+    try:
+        locale.setlocale(locale.LC_MONETARY, 'en_IN.UTF-8')
+    except locale.Error:
+        # Fallback if the locale is not available
+        pass
+    
+    try:
+        # Try to use locale formatting
+        formatted = locale.currency(amount, grouping=True, symbol=True)
+        # If locale formatting doesn't use ₹, replace the symbol
+        if not formatted.startswith('₹'):
+            formatted = '₹' + formatted.lstrip(locale.localeconv()['currency_symbol'])
+        return formatted
+    except:
+        # Fallback to manual formatting with Indian number system
+        if amount >= 0:
+            is_negative = False
+        else:
+            is_negative = True
+            amount = abs(amount)
+            
+        # Convert to string with 2 decimal places
+        amount_str = f"{amount:.2f}"
+        
+        # Split into integer and decimal parts
+        parts = amount_str.split('.')
+        integer_part = parts[0]
+        decimal_part = parts[1] if len(parts) > 1 else "00"
+        
+        # Apply Indian comma system (1,23,456.78)
+        result = ""
+        
+        if len(integer_part) <= 3:
+            result = integer_part
+        else:
+            # First group of 3 from the right
+            result = integer_part[-3:]
+            remaining = integer_part[:-3]
+            
+            # Rest in groups of 2
+            while remaining:
+                # Get at most 2 digits from the right
+                group = remaining[-2:] if len(remaining) >= 2 else remaining
+                result = group + "," + result
+                remaining = remaining[:-len(group)]
+        
+        # Add decimal part
+        result = f"{result}.{decimal_part}"
+        
+        # Add negative sign if needed
+        if is_negative:
+            result = "-" + result
+            
+        # Add Rupee symbol
+        return f"₹{result}"
 
 def calculate_financial_health_score(budget_summary, savings_goals, investment_progress):
     """

@@ -1,0 +1,219 @@
+/* BudgetSummaryCard Component Styles */
+@import './variables.css';
+
+.budget-card {
+  background-color: var(--bg-white);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-md);
+  padding: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+  transition: var(--transition);
+  border-left: 4px solid transparent;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+.budget-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Color variations based on card type */
+.budget-card.primary {
+  border-left-color: var(--primary-color);
+}
+
+.budget-card.success {
+  border-left-color: var(--success-color);
+}
+
+.budget-card.warning {
+  border-left-color: var(--warning-color);
+}
+
+.budget-card.danger {
+  border-left-color: var(--danger-color);
+}
+
+.budget-card-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: var(--spacing-sm);
+}
+
+.budget-card-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--border-radius-circle);
+  margin-right: var(--spacing-sm);
+  flex-shrink: 0;
+}
+
+.budget-card.primary .budget-card-icon {
+  background-color: rgba(99, 102, 241, 0.1);
+  color: var(--primary-color);
+}
+
+.budget-card.success .budget-card-icon {
+  background-color: rgba(16, 185, 129, 0.1);
+  color: var(--success-color);
+}
+
+.budget-card.warning .budget-card-icon {
+  background-color: rgba(245, 158, 11, 0.1);
+  color: var(--warning-color);
+}
+
+.budget-card.danger .budget-card-icon {
+  background-color: rgba(239, 68, 68, 0.1);
+  color: var(--danger-color);
+}
+
+.budget-card-title {
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  margin: 0;
+  color: var(--text-primary);
+}
+
+.budget-card-body {
+  flex: 1;
+  margin-bottom: var(--spacing-md);
+}
+
+.budget-card-amount {
+  font-size: var(--font-size-xxl);
+  font-weight: 700;
+  margin-bottom: var(--spacing-xs);
+  position: relative;
+}
+
+.budget-card-amount::before {
+  content: var(--currency-symbol);
+  font-size: 0.8em;
+  position: relative;
+  top: -0.1em;
+  margin-right: 2px;
+}
+
+.budget-card.primary .budget-card-amount {
+  color: var(--primary-color);
+}
+
+.budget-card.success .budget-card-amount {
+  color: var(--success-color);
+}
+
+.budget-card.warning .budget-card-amount {
+  color: var(--warning-color);
+}
+
+.budget-card.danger .budget-card-amount {
+  color: var(--danger-color);
+}
+
+.budget-card-subtitle {
+  font-size: var(--font-size-sm);
+  color: var(--text-light);
+  margin-bottom: var(--spacing-sm);
+}
+
+.budget-card-progress {
+  height: 6px;
+  background-color: var(--bg-gray-100);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-top: var(--spacing-md);
+}
+
+.budget-card-progress-bar {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.6s ease;
+}
+
+.budget-card.primary .budget-card-progress-bar {
+  background-color: var(--primary-color);
+}
+
+.budget-card.success .budget-card-progress-bar {
+  background-color: var(--success-color);
+}
+
+.budget-card.warning .budget-card-progress-bar {
+  background-color: var(--warning-color);
+}
+
+.budget-card.danger .budget-card-progress-bar {
+  background-color: var(--danger-color);
+}
+
+.budget-card-footer {
+  display: flex;
+  align-items: center;
+  margin-top: auto;
+  padding-top: var(--spacing-sm);
+  border-top: 1px solid var(--bg-gray-100);
+}
+
+.trend-indicator {
+  display: flex;
+  align-items: center;
+  font-size: var(--font-size-sm);
+}
+
+.trend-indicator-icon {
+  margin-right: var(--spacing-xs);
+  display: flex;
+  align-items: center;
+}
+
+.trend-up {
+  color: var(--success-color);
+}
+
+.trend-down {
+  color: var(--danger-color);
+}
+
+.trend-neutral {
+  color: var(--text-light);
+}
+
+.budget-card-footer-text {
+  margin-left: auto;
+  font-size: var(--font-size-xs);
+  color: var(--text-light);
+}
+
+/* Animation for percentage counter */
+@keyframes fillProgress {
+  from { width: 0; }
+  to { width: var(--progress-width); }
+}
+
+.budget-card-animated-progress .budget-card-progress-bar {
+  animation: fillProgress 1s ease-out forwards;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .budget-card {
+    padding: var(--spacing-sm);
+  }
+  
+  .budget-card-icon {
+    width: 36px;
+    height: 36px;
+  }
+  
+  .budget-card-amount {
+    font-size: var(--font-size-xl);
+  }
+}

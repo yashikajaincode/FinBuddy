@@ -1,0 +1,240 @@
+/* SavingsGoalCard Component Styles */
+@import './variables.css';
+
+.savings-goal-card {
+  background-color: var(--bg-white);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-md);
+  margin-bottom: var(--spacing-lg);
+  overflow: hidden;
+  transition: var(--transition);
+  border-left: 4px solid var(--primary-color);
+}
+
+.savings-goal-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Status color variants */
+.savings-goal-card.primary {
+  border-left-color: var(--primary-color);
+}
+
+.savings-goal-card.success {
+  border-left-color: var(--success-color);
+}
+
+.savings-goal-card.warning {
+  border-left-color: var(--warning-color);
+}
+
+.savings-goal-card.danger {
+  border-left-color: var(--danger-color);
+}
+
+.goal-header {
+  display: flex;
+  align-items: center;
+  padding: var(--spacing-md);
+  border-bottom: 1px solid #f0f0f0;
+  position: relative;
+}
+
+.goal-icon {
+  font-size: 1.5rem;
+  margin-right: var(--spacing-md);
+}
+
+.goal-name {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 0;
+  flex: 1;
+  color: var(--text-primary);
+}
+
+.goal-actions {
+  display: flex;
+  align-items: center;
+}
+
+.goal-actions button {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--border-radius-circle);
+  background-color: transparent;
+  padding: 0;
+  margin-left: var(--spacing-xs);
+  opacity: 0.5;
+  transition: var(--transition);
+}
+
+.goal-actions button:hover {
+  opacity: 1;
+  background-color: #f0f0f0;
+  transform: none;
+}
+
+.goal-body {
+  padding: var(--spacing-md);
+}
+
+.goal-details {
+  margin-bottom: var(--spacing-md);
+}
+
+.goal-amount-container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: var(--spacing-sm);
+}
+
+.goal-current, .goal-target {
+  display: flex;
+  flex-direction: column;
+}
+
+.goal-current .label, 
+.goal-target .label,
+.goal-category .label,
+.goal-deadline .label {
+  font-size: 0.8rem;
+  color: var(--text-light);
+  margin-bottom: 4px;
+}
+
+.goal-current .amount, 
+.goal-target .amount {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.goal-current .amount {
+  color: var(--primary-color);
+}
+
+.goal-target .amount {
+  color: var(--text-primary);
+}
+
+.goal-current .amount::before,
+.goal-target .amount::before {
+  content: var(--currency-symbol);
+  margin-right: 2px;
+}
+
+.goal-category, .goal-deadline {
+  margin-top: var(--spacing-sm);
+  display: flex;
+  flex-direction: column;
+}
+
+.goal-category .badge {
+  display: inline-block;
+  width: fit-content;
+  padding: 2px 8px;
+  border-radius: 12px;
+  background-color: #f0f0f0;
+  font-size: 0.8rem;
+}
+
+.goal-deadline .date {
+  font-weight: 500;
+}
+
+.goal-deadline .days-remaining {
+  font-size: 0.8rem;
+  color: var(--text-light);
+  margin-left: var(--spacing-xs);
+}
+
+.goal-progress-container {
+  margin-bottom: var(--spacing-md);
+}
+
+.progress-bar {
+  height: 8px;
+  background-color: #eee;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 5px;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  transition: width 0.3s ease;
+}
+
+.savings-goal-card.primary .progress-bar-fill {
+  background-color: var(--primary-color);
+}
+
+.savings-goal-card.success .progress-bar-fill {
+  background-color: var(--success-color);
+}
+
+.savings-goal-card.warning .progress-bar-fill {
+  background-color: var(--warning-color);
+}
+
+.savings-goal-card.danger .progress-bar-fill {
+  background-color: var(--danger-color);
+}
+
+.progress-text {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: var(--text-light);
+}
+
+.contribute-button {
+  width: 100%;
+  padding: 10px;
+  font-weight: 500;
+  border-radius: var(--border-radius-md);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.contribute-button.primary {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.contribute-button.primary:hover {
+  background-color: var(--primary-dark);
+}
+
+.goal-completed {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-sm);
+  background-color: rgba(76, 175, 80, 0.1);
+  border-radius: var(--border-radius-md);
+  color: var(--success-color);
+}
+
+.completed-icon {
+  margin-right: var(--spacing-xs);
+  font-size: 1.2rem;
+}
+
+.completed-text {
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .goal-amount-container {
+    flex-direction: column;
+  }
+  
+  .goal-current, .goal-target {
+    margin-bottom: var(--spacing-xs);
+  }
+}
