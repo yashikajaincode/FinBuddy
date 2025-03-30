@@ -1,0 +1,93 @@
+/* 
+ * LoadingSpinner.css
+ * Styling for the simple spinner component 
+ */
+
+.spinner-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.spinner-container.with-text {
+  gap: 15px;
+}
+
+.spinner {
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+/* Size variations */
+.spinner.small {
+  width: 20px;
+  height: 20px;
+  border-width: 2px;
+}
+
+.spinner.medium {
+  width: 40px;
+  height: 40px;
+  border-width: 3px;
+}
+
+.spinner.large {
+  width: 60px;
+  height: 60px;
+  border-width: 4px;
+}
+
+/* Theme variations */
+.spinner.primary {
+  border: 3px solid rgba(108, 99, 255, 0.2);
+  border-top-color: var(--primary-color, #6c63ff);
+}
+
+.spinner.success {
+  border: 3px solid rgba(71, 207, 115, 0.2);
+  border-top-color: var(--success, #47cf73);
+}
+
+.spinner.warning {
+  border: 3px solid rgba(255, 172, 51, 0.2);
+  border-top-color: var(--warning, #ffac33);
+}
+
+.spinner.danger {
+  border: 3px solid rgba(255, 77, 77, 0.2);
+  border-top-color: var(--danger, #ff4d4d);
+}
+
+.spinner-text {
+  font-size: 14px;
+  color: var(--text-color, #333);
+  font-weight: 500;
+  text-align: center;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 576px) {
+  .spinner.large {
+    width: 45px;
+    height: 45px;
+    border-width: 3px;
+  }
+  
+  .spinner.medium {
+    width: 30px;
+    height: 30px;
+    border-width: 2px;
+  }
+  
+  .spinner-text {
+    font-size: 12px;
+  }
+}

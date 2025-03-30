@@ -1,0 +1,102 @@
+/* 
+ * ChartComponents.css
+ * Styles for chart-related components (CurrencyAxis, CurrencyTooltip, etc.)
+ */
+
+/* Custom Tooltip styles */
+.custom-tooltip {
+  background-color: rgba(255, 255, 255, 0.95);
+  border-radius: 4px;
+  padding: 10px 14px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+  border: 1px solid #eee;
+  font-size: 14px;
+  min-width: 120px;
+}
+
+.tooltip-label {
+  margin: 0 0 8px;
+  font-weight: 600;
+  color: var(--text-color, #333);
+  border-bottom: 1px solid #eee;
+  padding-bottom: 6px;
+}
+
+.tooltip-content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.tooltip-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.tooltip-key {
+  font-weight: 500;
+}
+
+.tooltip-value {
+  font-weight: 600;
+}
+
+/* Currency Axis styles */
+.currency-axis {
+  display: flex;
+  font-size: 12px;
+  color: var(--text-lighter, #999);
+}
+
+.currency-axis.x-axis {
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 8px;
+}
+
+.currency-axis.y-axis {
+  flex-direction: column-reverse;
+  justify-content: space-between;
+  margin-right: 8px;
+}
+
+.currency-axis .tick {
+  display: flex;
+  align-items: center;
+}
+
+.currency-axis.x-axis.bottom .tick,
+.currency-axis.x-axis.top .tick {
+  flex-direction: column;
+}
+
+.currency-axis.y-axis.left .tick,
+.currency-axis.y-axis.right .tick {
+  flex-direction: row;
+}
+
+.currency-axis.y-axis.left .tick {
+  justify-content: flex-end;
+}
+
+.currency-axis.y-axis.right .tick {
+  justify-content: flex-start;
+}
+
+.tick-value {
+  white-space: nowrap;
+}
+
+/* Responsive adjustments */
+@media (max-width: 576px) {
+  .custom-tooltip {
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+  
+  .currency-axis {
+    font-size: 10px;
+  }
+}

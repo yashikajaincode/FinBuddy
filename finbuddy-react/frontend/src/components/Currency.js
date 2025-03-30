@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { formatCurrency } from '../utils/formatters';
+import '../styles/Currency.css';
 
 /**
  * Currency component for displaying monetary values in INR format
@@ -12,22 +12,32 @@ import { formatCurrency } from '../utils/formatters';
  * @param {string} props.className - Additional CSS classes
  * @returns {JSX.Element} Formatted currency display
  */
-const Currency = ({ 
-  amount, 
-  showSymbol = true, 
-  showDecimals = true, 
-  className = '',
-  ...rest 
-}) => {
-  // Format the amount using the formatter utility
-  const formattedAmount = formatCurrency(amount, showSymbol, showDecimals);
-  
-  // Combine provided className with 'currency' class
-  const combinedClassName = `currency ${className}`.trim();
+const Currency = ({ amount, showSymbol = true, showDecimals = true, className = '' }) => {
+  const formatAmount = (value) => {
+    const absValue = Math.abs(value);
+    
+    // Format based on amount size, using Indian number system
+    if (absValue >= 10000000) {
+      // Crores
+      return `${showSymbol ? '₹' : ''}${(value / 10000000).toFixed(showDecimals ? 2 : 0)} Cr`;
+    } else if (absValue >= 100000) {
+      // Lakhs
+      return `${showSymbol ? '₹' : ''}${(value / 100000).toFixed(showDecimals ? 2 : 0)} L`;
+    } else if (absValue >= 1000) {
+      // Thousands
+      return `${showSymbol ? '₹' : ''}${(value / 1000).toFixed(showDecimals ? 1 : 0)}K`;
+    }
+    
+    // Standard formatting for smaller numbers
+    return `${showSymbol ? '₹' : ''}${value.toFixed(showDecimals ? 2 : 0)}`;
+  };
+
+  // Format and add custom color class based on positive/negative amount
+  const valueClass = amount < 0 ? 'currency-negative' : 'currency-positive';
   
   return (
-    <span className={combinedClassName} {...rest}>
-      {formattedAmount}
+    <span className={`currency-component ${valueClass} ${className}`}>
+      {formatAmount(amount)}
     </span>
   );
 };

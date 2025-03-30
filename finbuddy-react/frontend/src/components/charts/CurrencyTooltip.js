@@ -1,38 +1,42 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { formatCurrency } from '../../utils/formatters';
-import '../../styles/variables.css';
+import Currency from '../Currency';
 
 /**
- * Custom tooltip component for charts with currency values
+ * Custom tooltip component for displaying currency values in charts
  * 
  * @param {Object} props - Component props
- * @param {boolean} props.active - Whether the tooltip is active/visible
- * @param {Array} props.payload - The data payload for the tooltip
- * @param {string} props.label - The label for the tooltip (e.g., x-axis category)
- * @param {string} props.valueKey - The key in the payload to use for the value
- * @param {string} props.labelFormatter - Optional function to format the label
- * @returns {JSX.Element|null} Formatted currency tooltip for charts
+ * @param {boolean} props.active - Whether the tooltip is active
+ * @param {Array} props.payload - Data for the tooltip
+ * @param {string} props.label - Label for the tooltip
+ * @param {string} props.labelFormatter - Function to format the label (optional)
+ * @param {string} props.valueFormatter - Function to format the value (optional)
+ * @returns {JSX.Element|null} Currency tooltip component
  */
-const CurrencyTooltip = ({ 
-  active, 
-  payload, 
-  label,
-  valueKey = 'value',
-  labelFormatter
-}) => {
+const CurrencyTooltip = ({ active, payload, label, labelFormatter, valueFormatter }) => {
   if (!active || !payload || !payload.length) {
     return null;
   }
 
-  const value = payload[0].payload[valueKey];
-  const formattedValue = formatCurrency(value, true, true);
   const formattedLabel = labelFormatter ? labelFormatter(label) : label;
-
+  
   return (
     <div className="custom-tooltip">
       <p className="tooltip-label">{formattedLabel}</p>
-      <p className="tooltip-value">{formattedValue}</p>
+      <div className="tooltip-content">
+        {payload.map((entry, index) => {
+          const value = valueFormatter 
+            ? valueFormatter(entry.value) 
+            : <Currency amount={entry.value} />;
+            
+          return (
+            <div key={`item-${index}`} className="tooltip-item" style={{ color: entry.color }}>
+              <span className="tooltip-key">{entry.name}: </span>
+              <span className="tooltip-value">{value}</span>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 };
@@ -40,12 +44,9 @@ const CurrencyTooltip = ({
 CurrencyTooltip.propTypes = {
   active: PropTypes.bool,
   payload: PropTypes.array,
-  label: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number
-  ]),
-  valueKey: PropTypes.string,
-  labelFormatter: PropTypes.func
+  label: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  labelFormatter: PropTypes.func,
+  valueFormatter: PropTypes.func
 };
 
 export default CurrencyTooltip;

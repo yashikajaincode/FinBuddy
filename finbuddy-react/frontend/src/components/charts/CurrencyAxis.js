@@ -1,56 +1,50 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { formatCurrency, formatCompactNumber } from '../../utils/formatters';
 
 /**
- * Custom axis component for charts with currency values
+ * Custom axis component for displaying currency values in charts
  * 
  * @param {Object} props - Component props
- * @param {string} props.axisType - The type of axis ('x' or 'y')
- * @param {number[]} props.ticks - The tick values for the axis
- * @param {boolean} props.useCompactFormat - Whether to use compact format for large numbers
- * @param {boolean} props.showSymbol - Whether to show the ₹ symbol
- * @returns {JSX.Element} Formatted currency axis for charts
+ * @param {string} props.axisType - Type of axis ('x' or 'y')
+ * @param {Array} props.ticks - Array of tick values
+ * @param {Function} props.tickFormatter - Function to format tick values (optional)
+ * @param {string} props.orientation - Orientation of the axis ('top', 'bottom', 'left', 'right')
+ * @returns {JSX.Element} Currency axis component
  */
-const CurrencyAxis = ({
-  axisType = 'y',
-  ticks = [],
-  useCompactFormat = true,
-  showSymbol = true
-}) => {
-  // Format function based on configuration
+const CurrencyAxis = ({ axisType, ticks, tickFormatter, orientation }) => {
   const formatValue = (value) => {
-    if (useCompactFormat) {
-      return formatCompactNumber(value);
-    } else {
-      return formatCurrency(value, showSymbol, false); // No decimals for axis labels
+    if (tickFormatter) {
+      return tickFormatter(value);
     }
+    
+    // Default formatter for INR currency
+    const absValue = Math.abs(value);
+    if (absValue >= 10000000) {
+      return `₹${(value / 10000000).toFixed(1)}Cr`;
+    } else if (absValue >= 100000) {
+      return `₹${(value / 100000).toFixed(1)}L`;
+    } else if (absValue >= 1000) {
+      return `₹${(value / 1000).toFixed(1)}K`;
+    }
+    return `₹${value}`;
   };
-  
+
   return (
-    <g className={`axis axis-${axisType}`}>
+    <div className={`currency-axis ${axisType}-axis ${orientation}`}>
       {ticks.map((tick, index) => (
-        <text 
-          key={`${axisType}-tick-${index}`}
-          className="tick-label"
-          x={axisType === 'x' ? tick : 0}
-          y={axisType === 'y' ? tick : 0}
-          dy={axisType === 'x' ? '1em' : '0.3em'}
-          dx={axisType === 'x' ? 0 : '-0.5em'}
-          textAnchor={axisType === 'x' ? 'middle' : 'end'}
-        >
-          {formatValue(tick)}
-        </text>
+        <div key={index} className="tick">
+          <span className="tick-value">{formatValue(tick)}</span>
+        </div>
       ))}
-    </g>
+    </div>
   );
 };
 
 CurrencyAxis.propTypes = {
-  axisType: PropTypes.oneOf(['x', 'y']),
-  ticks: PropTypes.arrayOf(PropTypes.number),
-  useCompactFormat: PropTypes.bool,
-  showSymbol: PropTypes.bool
+  axisType: PropTypes.oneOf(['x', 'y']).isRequired,
+  ticks: PropTypes.arrayOf(PropTypes.number).isRequired,
+  tickFormatter: PropTypes.func,
+  orientation: PropTypes.oneOf(['top', 'bottom', 'left', 'right']).isRequired
 };
 
 export default CurrencyAxis;

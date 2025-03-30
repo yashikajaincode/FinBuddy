@@ -1,0 +1,57 @@
+/* 
+ * Currency.css 
+ * Styles for the Currency component
+ */
+
+.currency-component {
+  font-family: var(--font-family, 'Poppins', sans-serif);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* Positive amounts (income, profits) */
+.currency-positive {
+  color: var(--success, #47cf73);
+}
+
+/* Negative amounts (expenses, losses) */
+.currency-negative {
+  color: var(--danger, #ff4d4d);
+}
+
+/* Size variations */
+.currency-small {
+  font-size: 0.85rem;
+}
+
+.currency-large {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.currency-xlarge {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+/* Special formatting for zero values */
+.currency-zero {
+  color: var(--text-lighter, #999);
+  font-weight: normal;
+}
+
+/* Animation for changing values */
+.currency-animated {
+  transition: all 0.3s ease;
+}
+
+/* Responsive adjustments */
+@media (max-width: 576px) {
+  .currency-xlarge {
+    font-size: 1.2rem;
+  }
+  
+  .currency-large {
+    font-size: 1rem;
+  }
+}

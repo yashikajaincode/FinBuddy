@@ -1,6 +1,7 @@
 import React from 'react';
-import './LoadingSpinner.css';
+import PropTypes from 'prop-types';
 import LoadingScreen from './LoadingScreen';
+import '../styles/LoadingSpinner.css';
 
 /**
  * Loading spinner component that shows a simple spinner for quick loads
@@ -16,47 +17,38 @@ import LoadingScreen from './LoadingScreen';
  */
 const LoadingSpinner = ({ 
   size = 'medium', 
-  text = '', 
-  fullScreen = false,
+  text, 
+  fullScreen = false, 
   theme = 'primary',
   mascot = 'coin'
 }) => {
-  // If fullScreen is true, use the LoadingScreen component
+  // If fullScreen is true, use the LoadingScreen component instead
   if (fullScreen) {
     return (
       <LoadingScreen 
         show={true} 
-        message={text || "Loading your financial future..."} 
+        message={text || 'Loading...'} 
         theme={theme}
         mascotType={mascot}
       />
     );
   }
-  
-  // Otherwise use the simple spinner
-  let spinnerSize;
-  
-  switch (size) {
-    case 'small':
-      spinnerSize = '30px';
-      break;
-    case 'large':
-      spinnerSize = '70px';
-      break;
-    case 'medium':
-    default:
-      spinnerSize = '50px';
-  }
-  
-  // Apply theme color class
-  const themeClass = theme ? `spinner-${theme}` : '';
-  
+
+  // Otherwise, return a simple spinner
   return (
-    <div className="spinner-container">
-      <div className={`spinner ${themeClass}`} style={{ width: spinnerSize, height: spinnerSize }}></div>
-      {text && <p className={`spinner-text ${themeClass}`}>{text}</p>}
+    <div className={`spinner-container ${text ? 'with-text' : ''}`}>
+      <div className={`spinner ${size} ${theme}`} />
+      {text && <div className="spinner-text">{text}</div>}
     </div>
   );
+};
+
+LoadingSpinner.propTypes = {
+  size: PropTypes.oneOf(['small', 'medium', 'large']),
+  text: PropTypes.string,
+  fullScreen: PropTypes.bool,
+  theme: PropTypes.oneOf(['primary', 'success', 'warning', 'danger']),
+  mascot: PropTypes.oneOf(['coin', 'piggy', 'chart', 'rocket', 'bull', 'bear', 'guru']),
 };
 
 export default LoadingSpinner;
