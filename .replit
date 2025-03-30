@@ -27,6 +27,10 @@ args = "FinBuddy Frontend"
 task = "workflow.run"
 args = "LoadingScreenDemo"
 
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "HTML Demo"
+
 [[workflows.workflow]]
 name = "FinBuddy Backend"
 author = "agent"
@@ -69,8 +73,23 @@ task = "packager.installForAll"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "streamlit run loading_screen_demo.py --server.port 5002 --server.address 0.0.0.0 --server.headless true"
-waitForPort = 5002
+args = "cd . && python -m http.server 5000 --bind 0.0.0.0"
+waitForPort = 5000
+
+[[workflows.workflow]]
+name = "HTML Demo"
+author = "agent"
+
+[workflows.workflow.metadata]
+agentRequireRestartOnSave = false
+
+[[workflows.workflow.tasks]]
+task = "packager.installForAll"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd demo && python -m http.server 8080 --bind 0.0.0.0"
+waitForPort = 8080
 
 [[ports]]
 localPort = 5000
@@ -83,3 +102,7 @@ externalPort = 3000
 [[ports]]
 localPort = 5002
 externalPort = 3001
+
+[[ports]]
+localPort = 8080
+externalPort = 8080
