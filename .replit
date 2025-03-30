@@ -31,6 +31,10 @@ args = "LoadingScreenDemo"
 task = "workflow.run"
 args = "HTML Demo"
 
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Responsive FinBuddy"
+
 [[workflows.workflow]]
 name = "FinBuddy Backend"
 author = "agent"
@@ -90,6 +94,21 @@ task = "packager.installForAll"
 task = "shell.exec"
 args = "cd demo && python -m http.server 8080 --bind 0.0.0.0"
 waitForPort = 8080
+
+[[workflows.workflow]]
+name = "Responsive FinBuddy"
+author = "agent"
+
+[workflows.workflow.metadata]
+agentRequireRestartOnSave = false
+
+[[workflows.workflow.tasks]]
+task = "packager.installForAll"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd responsive-demo && python -m http.server 5000 --bind 0.0.0.0"
+waitForPort = 5000
 
 [[ports]]
 localPort = 5000

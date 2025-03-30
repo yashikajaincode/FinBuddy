@@ -1,0 +1,1452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FinBuddy - Your Personal Financial Assistant</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* CSS Variables for consistent theming */
+        :root {
+            --primary-color: #6366F1;
+            --primary-light: #818CF8;
+            --primary-dark: #4F46E5;
+            --secondary-color: #F59E0B;
+            --success-color: #10B981;
+            --danger-color: #EF4444;
+            --gray-50: #F9FAFB;
+            --gray-100: #F3F4F6;
+            --gray-200: #E5E7EB;
+            --gray-300: #D1D5DB;
+            --gray-400: #9CA3AF;
+            --gray-500: #6B7280;
+            --gray-600: #4B5563;
+            --gray-700: #374151;
+            --gray-800: #1F2937;
+            --gray-900: #111827;
+            --border-radius: 8px;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --transition: all 0.3s ease;
+        }
+
+        /* Global Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--gray-800);
+            background-color: var(--gray-50);
+            line-height: 1.6;
+        }
+
+        a {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        a:hover {
+            color: var(--primary-dark);
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4, h5, h6 {
+            color: var(--gray-900);
+            font-weight: 600;
+            line-height: 1.3;
+            margin-bottom: 1rem;
+        }
+
+        h1 {
+            font-size: clamp(2rem, 4vw, 3rem);
+        }
+
+        h2 {
+            font-size: clamp(1.5rem, 3vw, 2.25rem);
+            margin-top: 2rem;
+        }
+
+        h3 {
+            font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+        }
+
+        p {
+            margin-bottom: 1.5rem;
+        }
+
+        /* Layout */
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .section {
+            padding: 4rem 0;
+        }
+
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            margin: -1rem;
+        }
+
+        .col {
+            flex: 1;
+            padding: 1rem;
+            min-width: 0;
+        }
+
+        @media (max-width: 768px) {
+            .row {
+                flex-direction: column;
+            }
+        }
+
+        /* Header */
+        .header {
+            background-color: white;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--primary-dark);
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            margin-right: 0.5rem;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.25rem;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+
+        .nav-links li a {
+            color: var(--gray-700);
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .nav-links li a:hover {
+            color: var(--primary-color);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--gray-700);
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .nav-links.active {
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background-color: white;
+                padding: 1rem;
+                box-shadow: var(--shadow);
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary-light), var(--primary-dark));
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            color: white;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--border-radius);
+            font-weight: 500;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+        }
+
+        .btn-primary {
+            background-color: white;
+            color: var(--primary-dark);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--gray-100);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: white;
+            border: 1px solid white;
+        }
+
+        .btn-outline:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        /* Features Section */
+        .features {
+            background-color: white;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-header p {
+            color: var(--gray-600);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background-color: var(--gray-50);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            height: 100%;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: var(--primary-light);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-card h3 {
+            margin-bottom: 1rem;
+        }
+
+        /* Loading Screen Mascots */
+        .mascots-section {
+            background-color: var(--gray-100);
+        }
+
+        .mascot-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .mascot-card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .mascot-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .mascot-animation {
+            height: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: var(--gray-50);
+        }
+
+        .mascot-details {
+            padding: 1.5rem;
+        }
+
+        .mascot-details h3 {
+            margin-bottom: 0.5rem;
+            color: var(--primary-dark);
+        }
+
+        .mascot-features {
+            list-style-position: inside;
+            margin-top: 1rem;
+            color: var(--gray-700);
+        }
+
+        .mascot-features li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Character Selection */
+        .character-selection {
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            margin-top: 3rem;
+            box-shadow: var(--shadow);
+        }
+
+        .character-selection h3 {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: var(--primary-dark);
+        }
+
+        .character-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .character-option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+            border: 2px solid transparent;
+        }
+
+        .character-option:hover {
+            background-color: var(--gray-100);
+        }
+
+        .character-option.selected {
+            background-color: var(--primary-light);
+            border-color: var(--primary-dark);
+        }
+
+        .character-option.selected .character-name {
+            color: white;
+        }
+
+        .character-preview {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 0.5rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .character-name {
+            font-size: 0.875rem;
+            font-weight: 500;
+            text-align: center;
+            color: var(--gray-700);
+        }
+
+        .preview-container {
+            height: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: var(--gray-50);
+            border-radius: var(--border-radius);
+            margin-top: 1.5rem;
+        }
+
+        /* Pricing Section */
+        .pricing {
+            background-color: white;
+        }
+
+        .pricing-card {
+            background-color: var(--gray-50);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 2rem;
+            height: 100%;
+            transition: var(--transition);
+            border: 2px solid transparent;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-light);
+        }
+
+        .pricing-card.featured {
+            border-color: var(--primary-color);
+            position: relative;
+        }
+
+        .featured-badge {
+            position: absolute;
+            top: 0;
+            right: 2rem;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0 0 var(--border-radius) var(--border-radius);
+            font-weight: 500;
+            font-size: 0.875rem;
+        }
+
+        .pricing-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .pricing-name {
+            color: var(--primary-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .pricing-price {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 0.5rem;
+        }
+
+        .pricing-price .currency {
+            font-size: 1.5rem;
+            font-weight: 500;
+            vertical-align: super;
+        }
+
+        .pricing-duration {
+            font-size: 0.875rem;
+            color: var(--gray-500);
+        }
+
+        .pricing-features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .pricing-features li {
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .pricing-features li::before {
+            content: "✓";
+            color: var(--success-color);
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+
+        .pricing-cta {
+            text-align: center;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            background-color: var(--gray-100);
+        }
+
+        .testimonial-card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            height: 100%;
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .testimonial-text::before,
+        .testimonial-text::after {
+            content: '"';
+            font-size: 2rem;
+            color: var(--primary-light);
+            font-family: serif;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+        }
+
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--gray-300);
+            margin-right: 1rem;
+            overflow: hidden;
+        }
+
+        .author-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .author-info h4 {
+            margin-bottom: 0.25rem;
+        }
+
+        .author-company {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+        }
+
+        /* Call to Action */
+        .cta-section {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+            text-align: center;
+        }
+
+        .cta-section h2 {
+            color: white;
+            margin-bottom: 1.5rem;
+        }
+
+        .cta-section p {
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            opacity: 0.9;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: var(--gray-900);
+            color: var(--gray-300);
+            padding: 4rem 0 2rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-col h3 {
+            color: white;
+            font-size: 1.25rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-links a {
+            color: var(--gray-400);
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-link {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: var(--gray-800);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: var(--transition);
+        }
+
+        .social-link:hover {
+            background-color: var(--primary-color);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid var(--gray-800);
+            font-size: 0.875rem;
+            color: var(--gray-500);
+        }
+
+        /* Loading Mascot Animation Styles */
+
+        /* Coin Mascot */
+        @keyframes bounceCoin {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        @keyframes rotateCoin {
+            0% { transform: rotateY(0); }
+            100% { transform: rotateY(360deg); }
+        }
+
+        @keyframes scaleShadow {
+            0%, 100% { transform: scaleX(1); opacity: 0.7; }
+            50% { transform: scaleX(0.7); opacity: 0.4; }
+        }
+
+        /* Piggy Bank Mascot */
+        @keyframes wigglePiggy {
+            0%, 100% { transform: rotate(0); }
+            25% { transform: rotate(-5deg); }
+            75% { transform: rotate(5deg); }
+        }
+
+        @keyframes blinkEyes {
+            0%, 45%, 55%, 100% { transform: scaleY(1); }
+            50% { transform: scaleY(0.1); }
+        }
+
+        @keyframes dropCoin {
+            0% { top: -30px; opacity: 1; }
+            60% { top: 10px; opacity: 1; }
+            70% { top: 10px; opacity: 0; transform: scale(0.8); }
+            100% { top: 10px; opacity: 0; }
+        }
+
+        /* Chart Mascot */
+        @keyframes pulseChart {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.05); }
+        }
+
+        @keyframes barGrow {
+            0% { transform: scaleY(0.7); }
+            100% { transform: scaleY(1); }
+        }
+
+        @keyframes arrowBounce {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(5px); }
+        }
+
+        /* Rocket Mascot */
+        @keyframes rocketMove {
+            0%, 100% { transform: translateY(0) rotate(5deg); }
+            50% { transform: translateY(-20px) rotate(-5deg); }
+        }
+
+        @keyframes flicker {
+            0% { opacity: 0.7; height: 25px; }
+            100% { opacity: 1; height: 30px; }
+        }
+
+        @keyframes particleFly {
+            0% { bottom: 0; opacity: 1; }
+            100% { bottom: -30px; opacity: 0; }
+        }
+
+        @keyframes pulseRupee {
+            0% { opacity: 0.8; transform: translateX(-50%) scale(1); }
+            100% { opacity: 1; transform: translateX(-50%) scale(1.1); }
+        }
+        
+        /* New Character - Guru Ji */
+        @keyframes floatGuru {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        /* New Character - Bull & Bear */
+        @keyframes bullBearMove {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px) rotate(-5deg); }
+            75% { transform: translateX(5px) rotate(5deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <nav class="navbar">
+                <a href="#" class="logo">
+                    <div class="logo-icon">₹</div>
+                    FinBuddy
+                </a>
+                <ul class="nav-links">
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#mascots">Mascots</a></li>
+                    <li><a href="#pricing">Pricing</a></li>
+                    <li><a href="#testimonials">Testimonials</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+                <button class="mobile-menu-btn">☰</button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Your Smart Indian Financial Assistant</h1>
+                <p>FinBuddy helps you learn budgeting, saving, and investing through a gamified, conversational approach tailored for Indian users.</p>
+                <div class="cta-buttons">
+                    <a href="#" class="btn btn-primary">Get Started</a>
+                    <a href="#" class="btn btn-outline">Learn More</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="section features" id="features">
+        <div class="container">
+            <div class="section-header">
+                <h2>Smart Financial Features</h2>
+                <p>FinBuddy comes packed with tools to help you manage your money and learn financial concepts</p>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="feature-card">
+                        <div class="feature-icon">₹</div>
+                        <h3>Budget Planning</h3>
+                        <p>Create smart budgets that adapt to your income and spending patterns using AI-powered recommendations.</p>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="feature-card">
+                        <div class="feature-icon">💰</div>
+                        <h3>Savings Goals</h3>
+                        <p>Set and track savings goals with customizable timeframes and automated contributions in Indian Rupees.</p>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="feature-card">
+                        <div class="feature-icon">📊</div>
+                        <h3>Investment Education</h3>
+                        <p>Learn about investing in the Indian market through interactive lessons tailored to your knowledge level.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="feature-card">
+                        <div class="feature-icon">🏆</div>
+                        <h3>Gamified Learning</h3>
+                        <p>Earn badges, complete challenges, and level up your financial knowledge while having fun.</p>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="feature-card">
+                        <div class="feature-icon">💬</div>
+                        <h3>AI Chat Assistant</h3>
+                        <p>Get personalized financial advice and answers to your money questions from our AI assistant.</p>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="feature-card">
+                        <div class="feature-icon">📱</div>
+                        <h3>Mobile Friendly</h3>
+                        <p>Access FinBuddy from any device with our responsive design and mobile application.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mascots Section -->
+    <section class="section mascots-section" id="mascots">
+        <div class="container">
+            <div class="section-header">
+                <h2>Meet Our Financial Mascots</h2>
+                <p>Choose your favorite financial companion to make your learning journey fun and engaging</p>
+            </div>
+            <div class="mascot-grid">
+                <!-- Coin Mascot -->
+                <div class="mascot-card">
+                    <div class="mascot-animation">
+                        <div style="animation: bounceCoin 2s infinite ease-in-out; width: 80px; height: 80px; display: flex; justify-content: center; align-items: center;">
+                            <div style="width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(45deg, #4F46E5, #818CF8); position: relative; display: flex; justify-content: center; align-items: center; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); animation: rotateCoin 8s infinite linear;">
+                                <div style="width: 50px; height: 50px; border-radius: 50%; background-color: rgba(255, 255, 255, 0.1); display: flex; justify-content: center; align-items: center; border: 2px solid rgba(255, 255, 255, 0.3);">
+                                    <div style="font-size: 28px; font-weight: bold; color: white; text-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);">₹</div>
+                                </div>
+                                <div style="position: absolute; top: 8px; left: 12px; width: 15px; height: 8px; border-radius: 50%; background: rgba(255, 255, 255, 0.7); transform: rotate(-30deg);"></div>
+                            </div>
+                            <div style="position: absolute; bottom: 25px; width: 50px; height: 8px; border-radius: 50%; background-color: rgba(0, 0, 0, 0.1); animation: scaleShadow 2s infinite ease-in-out;"></div>
+                        </div>
+                    </div>
+                    <div class="mascot-details">
+                        <h3>Coin Mascot</h3>
+                        <p>A bouncing rupee coin with a shiny 3D effect.</p>
+                        <ul class="mascot-features">
+                            <li>Bouncing animation</li>
+                            <li>Rotating 3D effect</li>
+                            <li>Animated shadow</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Piggy Bank Mascot -->
+                <div class="mascot-card">
+                    <div class="mascot-animation">
+                        <div style="animation: wigglePiggy 2s infinite ease-in-out; width: 100px; height: 80px; position: relative; display: flex; justify-content: center; align-items: center;">
+                            <div style="width: 70px; height: 50px; background-color: #F87171; border-radius: 45% 45% 50% 50%; position: relative; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);">
+                                <div style="width: 15px; height: 15px; background-color: #F87171; border-radius: 50%; position: absolute; top: -8px; left: 12px; transform: rotate(-30deg);"></div>
+                                <div style="width: 15px; height: 15px; background-color: #F87171; border-radius: 50%; position: absolute; top: -8px; right: 12px; transform: rotate(30deg);"></div>
+                                <div style="width: 24px; height: 20px; background-color: #FECACA; border-radius: 45%; position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%);">
+                                    <div style="width: 5px; height: 5px; background-color: #991B1B; border-radius: 50%; position: absolute; bottom: 6px; left: 6px;"></div>
+                                    <div style="width: 5px; height: 5px; background-color: #991B1B; border-radius: 50%; position: absolute; bottom: 6px; right: 6px;"></div>
+                                </div>
+                                <div style="width: 12px; height: 12px; background-color: white; border-radius: 50%; position: absolute; top: 12px; left: 15px;">
+                                    <div style="width: 5px; height: 5px; background-color: #1F2937; border-radius: 50%; position: absolute; top: 4px; left: 4px; animation: blinkEyes 4s infinite;"></div>
+                                </div>
+                                <div style="width: 12px; height: 12px; background-color: white; border-radius: 50%; position: absolute; top: 12px; right: 15px;">
+                                    <div style="width: 5px; height: 5px; background-color: #1F2937; border-radius: 50%; position: absolute; top: 4px; left: 4px; animation: blinkEyes 4s infinite;"></div>
+                                </div>
+                                <div style="width: 12px; height: 2px; background-color: #991B1B; position: absolute; top: 12px; left: 50%; transform: translateX(-50%); border-radius: 3px;"></div>
+                            </div>
+                            <div style="position: absolute; width: 12px; height: 12px; background-color: #FBBF24; border-radius: 50%; border: 1px solid #F59E0B; top: 0; left: 20px; opacity: 0; animation: dropCoin 3s infinite; display: flex; justify-content: center; align-items: center; font-size: 8px; font-weight: bold;">₹</div>
+                            <div style="position: absolute; width: 12px; height: 12px; background-color: #FBBF24; border-radius: 50%; border: 1px solid #F59E0B; top: 0; left: 35px; opacity: 0; animation: dropCoin 3s infinite 1s; display: flex; justify-content: center; align-items: center; font-size: 8px; font-weight: bold;">₹</div>
+                        </div>
+                    </div>
+                    <div class="mascot-details">
+                        <h3>Piggy Bank</h3>
+                        <p>A cute piggy bank that wiggles and collects rupee coins.</p>
+                        <ul class="mascot-features">
+                            <li>Wiggling animation</li>
+                            <li>Blinking eyes</li>
+                            <li>Falling rupee coins</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Guru Ji Mascot -->
+                <div class="mascot-card">
+                    <div class="mascot-animation">
+                        <div style="animation: floatGuru 3s infinite ease-in-out; width: 80px; height: 100px; position: relative; display: flex; justify-content: center; align-items: center;">
+                            <div style="width: 50px; height: 80px; position: relative;">
+                                <!-- Head -->
+                                <div style="width: 30px; height: 30px; background-color: #F8FAFC; border-radius: 50%; position: absolute; top: 0; left: 50%; transform: translateX(-50%); border: 1px solid #E2E8F0;"></div>
+                                
+                                <!-- Face -->
+                                <div style="width: 4px; height: 4px; background-color: #1E293B; border-radius: 50%; position: absolute; top: 12px; left: 12px;"></div>
+                                <div style="width: 4px; height: 4px; background-color: #1E293B; border-radius: 50%; position: absolute; top: 12px; right: 12px;"></div>
+                                <div style="width: 8px; height: 2px; background-color: #1E293B; position: absolute; top: 20px; left: 50%; transform: translateX(-50%);"></div>
+                                
+                                <!-- Turban -->
+                                <div style="width: 36px; height: 14px; background-color: #FBBF24; border-radius: 50% 50% 0 0; position: absolute; top: -6px; left: 50%; transform: translateX(-50%);"></div>
+                                <div style="width: 6px; height: 6px; background-color: #D97706; border-radius: 50%; position: absolute; top: -1px; left: 50%; transform: translateX(-50%);"></div>
+                                
+                                <!-- Beard -->
+                                <div style="width: 28px; height: 15px; background-color: #94A3B8; border-radius: 0 0 50% 50%; position: absolute; top: 20px; left: 50%; transform: translateX(-50%);"></div>
+                                
+                                <!-- Body -->
+                                <div style="width: 36px; height: 40px; background-color: #EF4444; border-radius: 12px 12px 4px 4px; position: absolute; top: 30px; left: 50%; transform: translateX(-50%);"></div>
+                                
+                                <!-- Hands -->
+                                <div style="width: 12px; height: 6px; background-color: #F8FAFC; border-radius: 3px; position: absolute; top: 45px; left: 2px; transform: rotate(-15deg);"></div>
+                                <div style="width: 12px; height: 6px; background-color: #F8FAFC; border-radius: 3px; position: absolute; top: 45px; right: 2px; transform: rotate(15deg);"></div>
+                                
+                                <!-- Book -->
+                                <div style="width: 24px; height: 15px; background-color: #7E22CE; border-radius: 2px; position: absolute; top: 60px; left: 50%; transform: translateX(-50%); border: 1px solid #581C87;"></div>
+                                <div style="width: 22px; height: 1px; background-color: #F8FAFC; position: absolute; top: 66px; left: 50%; transform: translateX(-50%);"></div>
+                                <div style="width: 8px; height: 8px; font-size: 8px; position: absolute; top: 62px; left: 50%; transform: translateX(-50%); color: #F8FAFC; text-align: center; font-weight: bold;">₹</div>
+                            </div>
+                            
+                            <!-- Shadow -->
+                            <div style="position: absolute; bottom: 5px; width: 40px; height: 6px; border-radius: 50%; background-color: rgba(0, 0, 0, 0.1); animation: scaleShadow 3s infinite ease-in-out;"></div>
+                        </div>
+                    </div>
+                    <div class="mascot-details">
+                        <h3>Guru Ji</h3>
+                        <p>A wise financial guru with a sacred book of money wisdom.</p>
+                        <ul class="mascot-features">
+                            <li>Floating animation</li>
+                            <li>Indian cultural design</li>
+                            <li>Financial wisdom book</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Bull & Bear Mascot -->
+                <div class="mascot-card">
+                    <div class="mascot-animation">
+                        <div style="animation: bullBearMove 3s infinite ease-in-out; width: 100px; height: 80px; position: relative; display: flex; justify-content: center; align-items: center;">
+                            <!-- Bull (Green) -->
+                            <div style="width: 35px; height: 45px; position: absolute; left: 15px;">
+                                <!-- Bull Head -->
+                                <div style="width: 28px; height: 22px; background-color: #10B981; border-radius: 8px; position: absolute; top: 0; left: 0;"></div>
+                                
+                                <!-- Bull Eyes -->
+                                <div style="width: 4px; height: 4px; background-color: white; border-radius: 50%; position: absolute; top: 8px; left: 6px;"></div>
+                                <div style="width: 4px; height: 4px; background-color: white; border-radius: 50%; position: absolute; top: 8px; right: 6px;"></div>
+                                
+                                <!-- Bull Horns -->
+                                <div style="width: 10px; height: 2px; background-color: #059669; position: absolute; top: 4px; left: -5px; transform: rotate(-30deg);"></div>
+                                <div style="width: 10px; height: 2px; background-color: #059669; position: absolute; top: 4px; right: -5px; transform: rotate(30deg);"></div>
+                                
+                                <!-- Bull Body -->
+                                <div style="width: 24px; height: 20px; background-color: #10B981; border-radius: 4px; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);"></div>
+                                
+                                <!-- Bull Chart Arrow -->
+                                <div style="width: 12px; height: 12px; position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%); color: white; text-align: center; font-weight: bold;">
+                                    <div style="width: 0; height: 0; border-left: 6px solid transparent; border-right: 6px solid transparent; border-bottom: 9px solid white;"></div>
+                                </div>
+                            </div>
+                            
+                            <!-- Bear (Red) -->
+                            <div style="width: 35px; height: 45px; position: absolute; right: 15px;">
+                                <!-- Bear Head -->
+                                <div style="width: 28px; height: 22px; background-color: #EF4444; border-radius: 8px; position: absolute; top: 0; right: 0;"></div>
+                                
+                                <!-- Bear Eyes -->
+                                <div style="width: 4px; height: 4px; background-color: white; border-radius: 50%; position: absolute; top: 8px; left: 6px;"></div>
+                                <div style="width: 4px; height: 4px; background-color: white; border-radius: 50%; position: absolute; top: 8px; right: 6px;"></div>
+                                
+                                <!-- Bear Ears -->
+                                <div style="width: 6px; height: 6px; background-color: #DC2626; border-radius: 50%; position: absolute; top: -3px; left: 5px;"></div>
+                                <div style="width: 6px; height: 6px; background-color: #DC2626; border-radius: 50%; position: absolute; top: -3px; right: 5px;"></div>
+                                
+                                <!-- Bear Body -->
+                                <div style="width: 24px; height: 20px; background-color: #EF4444; border-radius: 4px; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);"></div>
+                                
+                                <!-- Bear Chart Arrow -->
+                                <div style="width: 12px; height: 12px; position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%); color: white; text-align: center; font-weight: bold;">
+                                    <div style="width: 0; height: 0; border-left: 6px solid transparent; border-right: 6px solid transparent; border-top: 9px solid white;"></div>
+                                </div>
+                            </div>
+                            
+                            <!-- Rupee in Middle -->
+                            <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 18px; font-weight: bold; color: #4F46E5; text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">₹</div>
+                        </div>
+                    </div>
+                    <div class="mascot-details">
+                        <h3>Bull & Bear</h3>
+                        <p>Market mascots representing the ups and downs of investing.</p>
+                        <ul class="mascot-features">
+                            <li>Market-themed characters</li>
+                            <li>Bull (up) and Bear (down) indicators</li>
+                            <li>Market education symbolism</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Character Selection -->
+            <div class="character-selection">
+                <h3>Choose Your Financial Buddy</h3>
+                <p>Select your favorite mascot to accompany you on your financial journey</p>
+                
+                <div class="character-options">
+                    <div class="character-option selected" data-mascot="coin">
+                        <div class="character-preview">
+                            <div style="width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(45deg, #4F46E5, #818CF8); display: flex; justify-content: center; align-items: center;">
+                                <div style="font-size: 20px; font-weight: bold; color: white;">₹</div>
+                            </div>
+                        </div>
+                        <div class="character-name">Coin</div>
+                    </div>
+                    
+                    <div class="character-option" data-mascot="piggy">
+                        <div class="character-preview">
+                            <div style="width: 40px; height: 30px; background-color: #F87171; border-radius: 45% 45% 50% 50%; position: relative;">
+                                <div style="width: 8px; height: 8px; background-color: white; border-radius: 50%; position: absolute; top: 10px; left: 8px;"></div>
+                                <div style="width: 8px; height: 8px; background-color: white; border-radius: 50%; position: absolute; top: 10px; right: 8px;"></div>
+                            </div>
+                        </div>
+                        <div class="character-name">Piggy</div>
+                    </div>
+                    
+                    <div class="character-option" data-mascot="guru">
+                        <div class="character-preview">
+                            <div style="width: 30px; height: 40px; position: relative;">
+                                <div style="width: 20px; height: 20px; background-color: #F8FAFC; border-radius: 50%; position: absolute; top: 0; left: 5px;"></div>
+                                <div style="width: 24px; height: 9px; background-color: #FBBF24; border-radius: 50% 50% 0 0; position: absolute; top: -4px; left: 3px;"></div>
+                                <div style="width: 24px; height: 20px; background-color: #EF4444; border-radius: 6px; position: absolute; top: 18px; left: 3px;"></div>
+                            </div>
+                        </div>
+                        <div class="character-name">Guru Ji</div>
+                    </div>
+                    
+                    <div class="character-option" data-mascot="bull-bear">
+                        <div class="character-preview">
+                            <div style="position: relative; width: 40px; height: 30px;">
+                                <div style="width: 18px; height: 15px; background-color: #10B981; border-radius: 5px; position: absolute; top: 5px; left: 2px;"></div>
+                                <div style="width: 18px; height: 15px; background-color: #EF4444; border-radius: 5px; position: absolute; top: 5px; right: 2px;"></div>
+                            </div>
+                        </div>
+                        <div class="character-name">Bull & Bear</div>
+                    </div>
+                </div>
+                
+                <div class="preview-container" id="mascot-preview">
+                    <!-- Preview content will be inserted here via JavaScript -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="section pricing" id="pricing">
+        <div class="container">
+            <div class="section-header">
+                <h2>Simple, Transparent Pricing</h2>
+                <p>Choose the plan that best fits your financial education needs</p>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="pricing-card">
+                        <div class="pricing-header">
+                            <h3 class="pricing-name">Free</h3>
+                            <div class="pricing-price"><span class="currency">₹</span>0</div>
+                            <div class="pricing-duration">Forever</div>
+                        </div>
+                        <ul class="pricing-features">
+                            <li>Basic budget planning</li>
+                            <li>Single savings goal</li>
+                            <li>Basic financial education</li>
+                            <li>Limited AI chat assistance</li>
+                            <li>Community support</li>
+                        </ul>
+                        <div class="pricing-cta">
+                            <a href="#" class="btn btn-primary">Get Started</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col">
+                    <div class="pricing-card featured">
+                        <div class="featured-badge">Popular</div>
+                        <div class="pricing-header">
+                            <h3 class="pricing-name">Pro</h3>
+                            <div class="pricing-price"><span class="currency">₹</span>299</div>
+                            <div class="pricing-duration">per month</div>
+                        </div>
+                        <ul class="pricing-features">
+                            <li>Advanced budget planning</li>
+                            <li>Multiple savings goals</li>
+                            <li>Complete course library</li>
+                            <li>Unlimited AI financial advice</li>
+                            <li>SMS notifications</li>
+                            <li>Priority support</li>
+                        </ul>
+                        <div class="pricing-cta">
+                            <a href="#" class="btn btn-primary">Try Pro</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col">
+                    <div class="pricing-card">
+                        <div class="pricing-header">
+                            <h3 class="pricing-name">Family</h3>
+                            <div class="pricing-price"><span class="currency">₹</span>799</div>
+                            <div class="pricing-duration">per month</div>
+                        </div>
+                        <ul class="pricing-features">
+                            <li>Up to 5 family members</li>
+                            <li>Shared & individual budgets</li>
+                            <li>Family financial goals</li>
+                            <li>Complete course library</li>
+                            <li>Unlimited AI financial advice</li>
+                            <li>SMS notifications</li>
+                            <li>Priority support</li>
+                        </ul>
+                        <div class="pricing-cta">
+                            <a href="#" class="btn btn-primary">Try Family</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="section testimonials" id="testimonials">
+        <div class="container">
+            <div class="section-header">
+                <h2>What Our Users Say</h2>
+                <p>Thousands of Indians are improving their financial literacy with FinBuddy</p>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="testimonial-card">
+                        <div class="testimonial-text">
+                            FinBuddy helped me understand investing in a way that actually makes sense. The gamification made learning about money fun for the first time in my life!
+                        </div>
+                        <div class="testimonial-author">
+                            <div class="author-avatar" style="background-color: #6366F1; display: flex; justify-content: center; align-items: center; color: white; font-weight: bold;">P</div>
+                            <div class="author-info">
+                                <h4>Priya Sharma</h4>
+                                <div class="author-company">College Student, Delhi</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="testimonial-card">
+                        <div class="testimonial-text">
+                            I used to avoid thinking about my finances, but FinBuddy's approach made it approachable. I've already saved ₹50,000 towards my first home!
+                        </div>
+                        <div class="testimonial-author">
+                            <div class="author-avatar" style="background-color: #10B981; display: flex; justify-content: center; align-items: center; color: white; font-weight: bold;">R</div>
+                            <div class="author-info">
+                                <h4>Rahul Patel</h4>
+                                <div class="author-company">Software Engineer, Bangalore</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="testimonial-card">
+                        <div class="testimonial-text">
+                            The AI chat feature is like having a financial advisor in your pocket. I love how it explains complex concepts in simple language.
+                        </div>
+                        <div class="testimonial-author">
+                            <div class="author-avatar" style="background-color: #F59E0B; display: flex; justify-content: center; align-items: center; color: white; font-weight: bold;">N</div>
+                            <div class="author-info">
+                                <h4>Neha Gupta</h4>
+                                <div class="author-company">Marketing Manager, Mumbai</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="section cta-section">
+        <div class="container">
+            <h2>Start Your Financial Journey Today</h2>
+            <p>Join thousands of Indians who are taking control of their finances and building a better future with FinBuddy.</p>
+            <a href="#" class="btn btn-primary">Get Started For Free</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>FinBuddy</h3>
+                    <p>Your AI-powered financial education platform designed for India.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link">F</a>
+                        <a href="#" class="social-link">T</a>
+                        <a href="#" class="social-link">I</a>
+                        <a href="#" class="social-link">L</a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h3>Company</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Press</a></li>
+                        <li><a href="#">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Resources</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Financial Guides</a></li>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">API Documentation</a></li>
+                        <li><a href="#">Community Forum</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Legal</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                        <li><a href="#">Security</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; 2025 FinBuddy. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            const navLinks = document.querySelector('.nav-links');
+            
+            mobileMenuBtn.addEventListener('click', function() {
+                navLinks.classList.toggle('active');
+            });
+            
+            // Close menu when clicking nav links
+            const links = document.querySelectorAll('.nav-links a');
+            links.forEach(link => {
+                link.addEventListener('click', () => {
+                    navLinks.classList.remove('active');
+                });
+            });
+            
+            // Character Selection
+            const characterOptions = document.querySelectorAll('.character-option');
+            const mascotPreview = document.getElementById('mascot-preview');
+            
+            characterOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    // Remove selected class from all options
+                    characterOptions.forEach(opt => opt.classList.remove('selected'));
+                    // Add selected class to clicked option
+                    this.classList.add('selected');
+                    
+                    // Update preview
+                    const mascotType = this.getAttribute('data-mascot');
+                    updateMascotPreview(mascotType);
+                });
+            });
+            
+            // Initialize with first mascot
+            updateMascotPreview('coin');
+            
+            function updateMascotPreview(mascotType) {
+                let html = '';
+                
+                switch(mascotType) {
+                    case 'coin':
+                        html = `
+                            <div style="animation: bounceCoin 2s infinite ease-in-out; width: 100px; height: 100px; display: flex; justify-content: center; align-items: center;">
+                                <div style="width: 70px; height: 70px; border-radius: 50%; background: linear-gradient(45deg, #4F46E5, #818CF8); position: relative; display: flex; justify-content: center; align-items: center; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); animation: rotateCoin 8s infinite linear;">
+                                    <div style="width: 60px; height: 60px; border-radius: 50%; background-color: rgba(255, 255, 255, 0.1); display: flex; justify-content: center; align-items: center; border: 2px solid rgba(255, 255, 255, 0.3);">
+                                        <div style="font-size: 32px; font-weight: bold; color: white; text-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);">₹</div>
+                                    </div>
+                                    <div style="position: absolute; top: 10px; left: 15px; width: 18px; height: 9px; border-radius: 50%; background: rgba(255, 255, 255, 0.7); transform: rotate(-30deg);"></div>
+                                </div>
+                                <div style="position: absolute; bottom: 40px; width: 60px; height: 8px; border-radius: 50%; background-color: rgba(0, 0, 0, 0.1); animation: scaleShadow 2s infinite ease-in-out;"></div>
+                            </div>
+                        `;
+                        break;
+                        
+                    case 'piggy':
+                        html = `
+                            <div style="animation: wigglePiggy 2s infinite ease-in-out; width: 120px; height: 100px; position: relative; display: flex; justify-content: center; align-items: center;">
+                                <div style="width: 80px; height: 60px; background-color: #F87171; border-radius: 45% 45% 50% 50%; position: relative; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);">
+                                    <div style="width: 18px; height: 18px; background-color: #F87171; border-radius: 50%; position: absolute; top: -9px; left: 15px; transform: rotate(-30deg);"></div>
+                                    <div style="width: 18px; height: 18px; background-color: #F87171; border-radius: 50%; position: absolute; top: -9px; right: 15px; transform: rotate(30deg);"></div>
+                                    <div style="width: 28px; height: 24px; background-color: #FECACA; border-radius: 45%; position: absolute; bottom: 5px; left: 50%; transform: translateX(-50%);">
+                                        <div style="width: 5px; height: 5px; background-color: #991B1B; border-radius: 50%; position: absolute; bottom: 7px; left: 7px;"></div>
+                                        <div style="width: 5px; height: 5px; background-color: #991B1B; border-radius: 50%; position: absolute; bottom: 7px; right: 7px;"></div>
+                                    </div>
+                                    <div style="width: 14px; height: 14px; background-color: white; border-radius: 50%; position: absolute; top: 15px; left: 18px;">
+                                        <div style="width: 6px; height: 6px; background-color: #1F2937; border-radius: 50%; position: absolute; top: 4px; left: 4px; animation: blinkEyes 4s infinite;"></div>
+                                    </div>
+                                    <div style="width: 14px; height: 14px; background-color: white; border-radius: 50%; position: absolute; top: 15px; right: 18px;">
+                                        <div style="width: 6px; height: 6px; background-color: #1F2937; border-radius: 50%; position: absolute; top: 4px; left: 4px; animation: blinkEyes 4s infinite;"></div>
+                                    </div>
+                                    <div style="width: 14px; height: 3px; background-color: #991B1B; position: absolute; top: 15px; left: 50%; transform: translateX(-50%); border-radius: 3px;"></div>
+                                </div>
+                                <div style="position: absolute; width: 14px; height: 14px; background-color: #FBBF24; border-radius: 50%; border: 1px solid #F59E0B; top: 0; left: 30px; opacity: 0; animation: dropCoin 3s infinite; display: flex; justify-content: center; align-items: center; font-size: 10px; font-weight: bold;">₹</div>
+                                <div style="position: absolute; width: 14px; height: 14px; background-color: #FBBF24; border-radius: 50%; border: 1px solid #F59E0B; top: 0; left: 50px; opacity: 0; animation: dropCoin 3s infinite 1s; display: flex; justify-content: center; align-items: center; font-size: 10px; font-weight: bold;">₹</div>
+                                <div style="position: absolute; width: 14px; height: 14px; background-color: #FBBF24; border-radius: 50%; border: 1px solid #F59E0B; top: 0; left: 70px; opacity: 0; animation: dropCoin 3s infinite 2s; display: flex; justify-content: center; align-items: center; font-size: 10px; font-weight: bold;">₹</div>
+                            </div>
+                        `;
+                        break;
+                        
+                    case 'guru':
+                        html = `
+                            <div style="animation: floatGuru 3s infinite ease-in-out; width: 100px; height: 120px; position: relative; display: flex; justify-content: center; align-items: center;">
+                                <div style="width: 60px; height: 90px; position: relative;">
+                                    <!-- Head -->
+                                    <div style="width: 40px; height: 40px; background-color: #F8FAFC; border-radius: 50%; position: absolute; top: 0; left: 50%; transform: translateX(-50%); border: 1px solid #E2E8F0;"></div>
+                                    
+                                    <!-- Face -->
+                                    <div style="width: 6px; height: 6px; background-color: #1E293B; border-radius: 50%; position: absolute; top: 15px; left: 15px;"></div>
+                                    <div style="width: 6px; height: 6px; background-color: #1E293B; border-radius: 50%; position: absolute; top: 15px; right: 15px;"></div>
+                                    <div style="width: 12px; height: 2px; background-color: #1E293B; position: absolute; top: 25px; left: 50%; transform: translateX(-50%);"></div>
+                                    
+                                    <!-- Turban -->
+                                    <div style="width: 48px; height: 18px; background-color: #FBBF24; border-radius: 50% 50% 0 0; position: absolute; top: -8px; left: 50%; transform: translateX(-50%);"></div>
+                                    <div style="width: 8px; height: 8px; background-color: #D97706; border-radius: 50%; position: absolute; top: -2px; left: 50%; transform: translateX(-50%);"></div>
+                                    
+                                    <!-- Beard -->
+                                    <div style="width: 38px; height: 20px; background-color: #94A3B8; border-radius: 0 0 50% 50%; position: absolute; top: 25px; left: 50%; transform: translateX(-50%);"></div>
+                                    
+                                    <!-- Body -->
+                                    <div style="width: 48px; height: 50px; background-color: #EF4444; border-radius: 15px 15px 5px 5px; position: absolute; top: 40px; left: 50%; transform: translateX(-50%);"></div>
+                                    
+                                    <!-- Hands -->
+                                    <div style="width: 16px; height: 8px; background-color: #F8FAFC; border-radius: 4px; position: absolute; top: 55px; left: 3px; transform: rotate(-15deg);"></div>
+                                    <div style="width: 16px; height: 8px; background-color: #F8FAFC; border-radius: 4px; position: absolute; top: 55px; right: 3px; transform: rotate(15deg);"></div>
+                                    
+                                    <!-- Book -->
+                                    <div style="width: 30px; height: 20px; background-color: #7E22CE; border-radius: 2px; position: absolute; top: 70px; left: 50%; transform: translateX(-50%); border: 1px solid #581C87;"></div>
+                                    <div style="width: 28px; height: 1px; background-color: #F8FAFC; position: absolute; top: 78px; left: 50%; transform: translateX(-50%);"></div>
+                                    <div style="width: 10px; height: 10px; font-size: 10px; position: absolute; top: 73px; left: 50%; transform: translateX(-50%); color: #F8FAFC; text-align: center; font-weight: bold;">₹</div>
+                                </div>
+                                
+                                <!-- Shadow -->
+                                <div style="position: absolute; bottom: 10px; width: 50px; height: 8px; border-radius: 50%; background-color: rgba(0, 0, 0, 0.1); animation: scaleShadow 3s infinite ease-in-out;"></div>
+                            </div>
+                        `;
+                        break;
+                        
+                    case 'bull-bear':
+                        html = `
+                            <div style="animation: bullBearMove 3s infinite ease-in-out; width: 150px; height: 100px; position: relative; display: flex; justify-content: center; align-items: center;">
+                                <!-- Bull (Green) -->
+                                <div style="width: 45px; height: 55px; position: absolute; left: 35px;">
+                                    <!-- Bull Head -->
+                                    <div style="width: 36px; height: 30px; background-color: #10B981; border-radius: 10px; position: absolute; top: 0; left: 0;"></div>
+                                    
+                                    <!-- Bull Eyes -->
+                                    <div style="width: 5px; height: 5px; background-color: white; border-radius: 50%; position: absolute; top: 10px; left: 8px;"></div>
+                                    <div style="width: 5px; height: 5px; background-color: white; border-radius: 50%; position: absolute; top: 10px; right: 8px;"></div>
+                                    
+                                    <!-- Bull Horns -->
+                                    <div style="width: 12px; height: 3px; background-color: #059669; position: absolute; top: 5px; left: -5px; transform: rotate(-30deg);"></div>
+                                    <div style="width: 12px; height: 3px; background-color: #059669; position: absolute; top: 5px; right: -5px; transform: rotate(30deg);"></div>
+                                    
+                                    <!-- Bull Body -->
+                                    <div style="width: 30px; height: 25px; background-color: #10B981; border-radius: 5px; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);"></div>
+                                    
+                                    <!-- Bull Chart Arrow -->
+                                    <div style="width: 16px; height: 16px; position: absolute; bottom: 5px; left: 50%; transform: translateX(-50%); color: white; text-align: center; font-weight: bold;">
+                                        <div style="width: 0; height: 0; border-left: 8px solid transparent; border-right: 8px solid transparent; border-bottom: 12px solid white;"></div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Bear (Red) -->
+                                <div style="width: 45px; height: 55px; position: absolute; right: 35px;">
+                                    <!-- Bear Head -->
+                                    <div style="width: 36px; height: 30px; background-color: #EF4444; border-radius: 10px; position: absolute; top: 0; right: 0;"></div>
+                                    
+                                    <!-- Bear Eyes -->
+                                    <div style="width: 5px; height: 5px; background-color: white; border-radius: 50%; position: absolute; top: 10px; left: 8px;"></div>
+                                    <div style="width: 5px; height: 5px; background-color: white; border-radius: 50%; position: absolute; top: 10px; right: 8px;"></div>
+                                    
+                                    <!-- Bear Ears -->
+                                    <div style="width: 8px; height: 8px; background-color: #DC2626; border-radius: 50%; position: absolute; top: -4px; left: 6px;"></div>
+                                    <div style="width: 8px; height: 8px; background-color: #DC2626; border-radius: 50%; position: absolute; top: -4px; right: 6px;"></div>
+                                    
+                                    <!-- Bear Body -->
+                                    <div style="width: 30px; height: 25px; background-color: #EF4444; border-radius: 5px; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);"></div>
+                                    
+                                    <!-- Bear Chart Arrow -->
+                                    <div style="width: 16px; height: 16px; position: absolute; bottom: 5px; left: 50%; transform: translateX(-50%); color: white; text-align: center; font-weight: bold;">
+                                        <div style="width: 0; height: 0; border-left: 8px solid transparent; border-right: 8px solid transparent; border-top: 12px solid white;"></div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Rupee in Middle -->
+                                <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 24px; font-weight: bold; color: #4F46E5; text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">₹</div>
+                            </div>
+                        `;
+                        break;
+                }
+                
+                mascotPreview.innerHTML = html;
+            }
+        });
+    </script>
+</body>
+</html>
